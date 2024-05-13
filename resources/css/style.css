@@ -1,0 +1,10 @@
+.sidebar-menu {
+  height: 100vh;
+  min-width: 110px;
+  max-width: 110px;
+  background: #ffffff;
+  z-index: 1022;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 15px 0px rgb(0 0 0 / 25%);
+  position: fixed;
+}

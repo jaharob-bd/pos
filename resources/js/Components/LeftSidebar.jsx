@@ -19,14 +19,228 @@ const LeftSidebar = props => {
         //         })
         // }
     }
-    
+    const style = `
+    .sidebar {
+        height: 100vh;
+       
+        max-width: 110px;
+        background: #ffffff;
+        z-index: 1022;
+        transition: all 0.5s ease;
+        box-shadow: 0 0 15px 0px rgb(0 0 0 / 25%);
+        position: fixed;
+    }
+    .sidebar .logo-details {
+        height: 60px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+      .sidebar .logo-details i {
+        font-size: 30px;
+        color: #fff;
+        height: 50px;
+        min-width: 78px;
+        text-align: center;
+        line-height: 50px;
+      }
+      .sidebar .logo-details .logo_name {
+        font-size: 22px;
+        color: #fff;
+        font-weight: 600;
+        transition: 0.3s ease;
+        transition-delay: 0.1s;
+      }
+      .sidebar .logo-details .logo_name {
+        transition-delay: 0s;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .sidebar .nav-links {
+        height: 100%;
+        overflow: auto;
+        padding-left: 0;
+      }
+      .sidebar .nav-links {
+        overflow: visible;
+      }
+      .sidebar .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+      .sidebar .nav-links li {
+        position: relative;
+        list-style: none;
+        transition: all 0.4s ease;
+      }
+      .sidebar .nav-links li .icon-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sidebar .nav-links li .icon-link {
+        display: block;
+      }
+      .sidebar .nav-links li i {
+        min-width: 100px;
+        text-align: center;
+        line-height: 40px;
+        color: #1e1e1e;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .sidebar .nav-links li.showMenu i.arrow {
+        transform: rotate(-180deg);
+      }
+      .sidebar .nav-links i.arrow {
+        display: none;
+      }
+      .sidebar .nav-links li a {
+        display: flex;
+        text-decoration: none;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0px 0;
+        border-top: 1px solid #7c7c7c;
+      }
+      .sidebar .nav-links li a .link_name {
+        font-size: 15px;
+        font-weight: 500;
+        color: #1e1e1e;
+        transition: all 0.4s ease;
+        text-shadow: none;
+      }
+      .sidebar .nav-links li.active a i,
+      .sidebar .nav-links li.active a .link_name {
+        color: #fff;
+      }
+      .sidebar .nav-links li.active,
+      .sidebar .nav-links li:focus,
+      .sidebar .nav-links li:hover {
+        background: #1e1e1e;
+      }
+      .sidebar .nav-links li:hover .link_name,
+      .sidebar .nav-links li:hover i {
+        color: #fff;
+      }
+      .sidebar .nav-links li .sub-menu {
+        padding: 6px 6px 14px 80px;
+        margin-top: -10px;
+        background: #a98f5a;
+        display: none;
+      }
+      .sidebar .nav-links li.showMenu .sub-menu {
+        display: block;
+      }
+      .sidebar .nav-links li .sub-menu a {
+        color: #fff;
+        font-size: 15px;
+        padding: 2px 0;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+        border: 0;
+        text-align: left;
+        justify-content: flex-start;
+      }
+      .sidebar .nav-links li .sub-menu a:hover {
+        opacity: 1;
+      }
+      .sidebar .nav-links li .sub-menu {
+        position: absolute;
+        left: 100%;
+        top: -10px;
+        margin-top: 0;
+        padding: 16px 35px;
+        border-radius: 0 6px 6px 0;
+        opacity: 0;
+        display: block;
+        pointer-events: none;
+        transition: 0s;
+      }
+      .sidebar .nav-links li:hover .sub-menu {
+        top: 0;
+        opacity: 1;
+        pointer-events: auto;
+        transition: all 0.4s ease;
+      }
+      .sidebar .nav-links li .sub-menu .link_name {
+        display: none;
+      }
+      .sidebar .nav-links li .sub-menu .link_name {
+        font-size: 18px;
+        opacity: 1;
+        display: block;
+      }
+      .sidebar .nav-links li .sub-menu.blank {
+        opacity: 1;
+        pointer-events: auto;
+        padding: 3px 20px 6px 16px;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .sidebar .nav-links li:hover .sub-menu.blank {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .ps > .ps__rail-y > .ps__thumb-y {
+        left: auto;
+        width: 3px;
+        right: 0;
+        background-color: #1e1e1e !important;
+      }
+      @media (max-width: 420px) {
+        .sidebar .nav-links li .sub-menu {
+          display: none;
+        }
+      }
+      @media (min-width: 768px) {
+        .fixed .sidebar + .content-wrapper {
+          margin-left: 110px;
+          margin-top: 70px;
+        }
+      }
+      
+      @media (min-width: 1600px) {
+        .dashboard-grid-group .col-xxl-2 {
+          -ms-flex: 0 0 16.666667%;
+          flex: 0 0 16.666667%;
+          max-width: 16.666667%;
+        }
+      }
+      
+      .navbar .navbar-nav .nav-link i {
+        font-size: 16px;
+        margin-right: 6px;
+      }
+      
+      @media (max-width: 992px) {
+        .navbar .navbar-nav .nav-link i {
+          width: 30px;
+        }
+      }
+      .sticky {
+        position: fixed;
+        top: 0;
+      }
+      .navbar-icon .user-menu .dropdown-item:hover {
+        background: transparent;
+        color: #1e1e1e;
+      }
+      
+      .navbar-nav .dropdown-menu .dropdown-item.bg-light {
+        color: #fff !important;
+        background-color: #1e1e1e !important;
+      }
+    `
     return (
-        <div className="w-30 h-full bg-black-gray-50 flex flex-row flex-shrink-0">
+        <div className="fixed w-30 h-full bg-black-gray-50">
+             <style>{style}</style>
             <div className="h-full flex flex-col items-center py-4 flex-shrink-0 w-20 bg-cyan-500">
                 <a href="#" className="flex items-center justify-center h-12 w-12 bg-cyan-50 text-cyan-700 rounded-full">
                     <img src="img/logo.png" />
                 </a>
-                <ul className="flex flex-col space-y-2 mt-12">
+                <ul className="nav-links parentMenu flex flex-col space-y-2 mt-12">
                     <li>
                         <Link href={route('dashboard')}
                             className="flex items-center">
