@@ -56,6 +56,7 @@ const LeftSidebar = props => {
         opacity: 0;
         pointer-events: none;
       }
+      // submenu
       .sidebar .nav-links {
         height: 100%;
         overflow: auto;
@@ -124,6 +125,9 @@ const LeftSidebar = props => {
       .sidebar .nav-links li:hover i {
         color: #fff;
       }
+    
+      // submenu
+
       .sidebar .nav-links li .sub-menu {
         padding: 6px 6px 14px 80px;
         margin-top: -10px;
@@ -143,7 +147,7 @@ const LeftSidebar = props => {
         text-align: left;
         justify-content: flex-start;
       }
-      .sidebar .nav-links li .sub-menu a:hover {
+      .sidebar .nav-links li .sub-menu a:hover 
         opacity: 1;
       }
       .sidebar .nav-links li .sub-menu {

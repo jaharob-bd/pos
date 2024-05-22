@@ -171,7 +171,6 @@ const LeftSidebarSubMenu = props => {
   `;
     return (
         <div class="sub_sidebar pscroll show">
-            <style>{styles}</style>
             <div class="closeSub">
                 <button class="btn btn-closes position-absolute pr-3 pt-2">
                     <i class="d-block position-relative text-white fas fa-times transition fs-18"></i>
@@ -203,22 +202,6 @@ const LeftSidebarSubMenu = props => {
                         <span class="ml-2">** Item -5</span>
                     </a>
                 </li>
-                {/* <li className='p-1'> ** Item -1 </li>
-                <li className="p-1">** Product Item -1
-                    <ul>
-                        <li className="p-1">****** sub item -1</li>
-                        <li className="p-1">****** sub item -1</li>
-                        <li className="p-1">****** sub item -1</li>
-                        <li className="p-1">****** sub item -1</li>
-                    </ul>
-                </li>
-                <li className="p-1">** Product Item -2 </li>
-                <li className="p-1">** Product Item -3 </li>
-                <li className="p-1">** Product Item -4 </li>
-                <li className="p-1">** Product Item -5 </li>
-                <li className="p-1">** Product Item -6 </li>
-                <li className="p-1">** Product Item -7 </li>
-                <li className="p-1">** Product Item -8 </li> */}
             </ul>
         </div>
     )

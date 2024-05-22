@@ -1,69 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-// 
-import { dateFormat } from '@/utils/helper'
-import LeftSidebar from '@/Components/LeftSidebar'
+import { dateFormat } from '../utils/helper'
 import ReceiptModal from '@/Components/ReceiptModal'
 import RightSidebar from '@/Components/RightSidebar'
-import ProductMode from '../Invoice/ProductMode'
-// import ProductMode from '../Pages/ProductMode'
+import ProductMode from './ProductMode'
+import { ProductsDatas } from "@/Api/ProductsDatas";
 
-export default function Index({ auth }) {
-    const initItem = [
-        {
-            'code': 1001,
-            'id': 1,
-            'qty': 1,
-            'name': 'Burger Asiatique',
-            'note': 'Extra Sauce',
-            'price': 12.5,
-            'devise': '$',
-            'available': 12,
-            'urlImage': '/products/br-1.jpeg',
-            'id_category': 1,
-        },
-        {
-            'code': 1002,
-            'id': 2,
-            'qty': 1,
-            'name': 'Burger Afrique',
-            'note': 'Extra Egg',
-            'price': 12.5,
-            'devise': '$',
-            'available': 20,
-            'urlImage': '/products/br-2.jpeg',
-            'id_category': 1,
-
-        },
-        {
-            'code': 1003,
-            'id': 3,
-            'qty': 1,
-            'name': 'Burger French',
-            'note': 'With Mayo',
-            'price': 20.5,
-            'devise': '$',
-            'available': 10,
-            'urlImage': '/products/br-3.jpeg',
-            'id_category': 1,
-
-        },
-        {
-            'code': 1004,
-            'id': 4,
-            'qty': 1,
-            'name': 'Burger Indian',
-            'note': 'with Mustard',
-            'price': 9.5,
-            'devise': '$',
-            'available': 10,
-            'urlImage': '/products/br-4.jpeg',
-            'id_category': 1,
-        }
-
-    ]
-    const [cartItems, setCartItems] = useState(initItem)
+export default function Dashboard({ auth }) {
+    const [cartItems, setCartItems] = useState(ProductsDatas)
     const [cash, setCash] = useState(0)
     const [change, setChange] = useState(0)
     const [showReceiptModal, setShowReceiptModal] = useState(false)
@@ -72,7 +17,7 @@ export default function Index({ auth }) {
     useEffect(() => {
         updateChange()
     }, [cash, cartItems])
-
+0
     const playSound = (src) => {
         let sound = new Audio();
         sound.src = src;
