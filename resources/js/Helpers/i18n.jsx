@@ -4,7 +4,7 @@ import {
 } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
-import { resources, fetchData} from '../Api/Localize'
+import { resources} from '../Api/Localize'
 
 i18n
     .use(HttpApi)

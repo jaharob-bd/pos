@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 // import LeftSidebar from '@/Components/LeftSidebar'
 import Sidebar from "@/Components/AuthLayout/Sidebar"
 import SubMenu from "@/Components/AuthLayout/SubMenu"
 import Header from "@/Components/AuthLayout/Header"
 import { SidebarOverlay } from '@/Components/AuthLayout/SidebarOverlay'
+import Swal from 'sweetalert2';
 
 const determineActiveMenu = () => {
   return window.location.pathname;
 }
 
 export default function Authenticated({ user, header, children, props }) {
-  // const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+  const { flash } = usePage().props;
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenSubMenu, setIsOpenSubMenu] = useState('hide');
-
+  // console.log(props);
   useEffect(() => {
     // Effect to handle sidebar state on component mount
     const handleSidebarState = () => {
@@ -26,13 +27,45 @@ export default function Authenticated({ user, header, children, props }) {
         sidebarMenu.classList.toggle('-translate-x-full');
       }
     };
+    handleSidebarState();
+    if (flash) {
+      // validation error
+      if (flash.errors && flash.errors.length > 0) {
+        Swal.fire({
+          title: 'Validation Errors',
+          html: '<ul>' + flash.error.map(err => `<li>${err}</li>`).join('') + '</ul>',
+          icon: 'error',
+          timer: 5000,
+          timerProgressBar: true,
+        });
+      }
+      if (flash.failed) {
+        Swal.fire({
+          text: flash.error,
+          icon: 'error',
+          timer: 5000,
+          timerProgressBar: true,
+        });
+      }
+      if (flash.warning) {
+        Swal.fire({
+          text: flash.warning,
+          icon: 'warning',
+          timer: 5000,
+          timerProgressBar: true,
+        });
+      }
+      if (flash.success) {
+        Swal.fire({
+          text: flash.success,
+          icon: 'success',
+          timer: 5000,
+          timerProgressBar: true,
+        });
+      }
+    }
+  }, [flash]);
 
-    handleSidebarState(); // Call the function once on mount
-
-    // Cleanup function if needed
-    // return () => { cleanup tasks };
-
-  }, []); // Empty dependency array to run effect only once
 
   const handleOverlayClick = () => {
     setIsOpen(false);

@@ -11,8 +11,8 @@ import bgImg from '@/assets/images/background.svg'
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        email: 'admin@gmail.com',
+        password: '12345678',
         remember: false,
     });
 

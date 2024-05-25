@@ -14,9 +14,34 @@
         routeUrl: "",
         submenu: [
             {
+                menu_name: "Product",
+                controller_name: "ProductController",
+                routeUrl: "/product"
+            },
+            {
+                menu_name: "Varient",
+                controller_name: "ProductController",
+                routeUrl: "/varient"
+            },
+            {
+                menu_name: "Band",
+                controller_name: "ProductController",
+                routeUrl: "/band"
+            },
+            {
+                menu_name: "Attribute",
+                controller_name: "ProductController",
+                routeUrl: "/attribute"
+            },
+            {
                 menu_name: "Manage Property",
-                controller_name: "ManageProperty",
-                routeUrl: "ManageProperty"
+                controller_name: "ProductController",
+                routeUrl: "ProductController"
+            },
+            {
+                menu_name: "Manage Property",
+                controller_name: "ProductController",
+                routeUrl: "ProductController"
             }
         ]
     },

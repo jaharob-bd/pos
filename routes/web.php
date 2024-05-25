@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Invoice\InvoiceController;
-use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -28,9 +28,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    // product
-    Route::get('/product', [ProductController::class, 'index'])->name('product');
+    // catalog module
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
     Route::post('/product-store', [ProductController::class, 'store'])->name('product-store');
+    Route::get('/product-edit/{slug}', [ProductController::class, 'edit'])->name('product-edit');
+    Route::post('/product-updated', [ProductController::class, 'updated'])->name('product-updated');
+    
     // Purchase
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('purchase');
     Route::post('/purchase-store', [PurchaseController::class, 'store'])->name('purchase-store');

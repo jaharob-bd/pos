@@ -1,8 +1,7 @@
 import React from 'react'
+import { Link } from '@inertiajs/react';
 
 const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
-    // alert(isOpenSubMenu);
-    console.log(isOpenSubMenu)
     return (
         <div className={`sub_menu ${isOpenSubMenu}`}>
             <div className="closeSub" onClick={() => subMenuHandler('hide')}>
@@ -10,29 +9,29 @@ const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
             </div>
             <ul className="nav navbar-nav sub-menu">
                 <li>
-                    <a className="sub_link_name squared">
-                        <span className="ml-2">** Item -1</span>
-                    </a>
+                    <Link href={route('products')} className="sub_link_name squared">
+                        <span className="ml-2"> Products</span>
+                    </Link>
                 </li>
                 <li>
-                    <a className="sub_link_name squared">
-                        <span className="ml-2">** Item -2</span>
-                    </a>
+                    <Link className="sub_link_name squared">
+                        <span className="ml-2">Categories</span>
+                    </Link>
                 </li>
                 <li>
-                    <a className="sub_link_name squared">
-                        <span className="ml-2">** Item -3</span>
-                    </a>
+                    <Link className="sub_link_name squared">
+                        <span className="ml-2">Varients</span>
+                    </Link>
                 </li>
                 <li>
-                    <a className="sub_link_name squared">
-                        <span className="ml-2">** Item -4</span>
-                    </a>
+                    <Link className="sub_link_name squared">
+                        <span className="ml-2">Attributes</span>
+                    </Link>
                 </li>
                 <li>
-                    <a className="sub_link_name squared">
-                        <span className="ml-2">** Item -5</span>
-                    </a>
+                    <Link className="sub_link_name squared">
+                        <span className="ml-2">Bands</span>
+                    </Link>
                 </li>
             </ul>
         </div>

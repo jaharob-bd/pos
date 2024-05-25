@@ -11,6 +11,7 @@ export const resources = {
             "inventory": "Invoice",
             "security": "Security",
             "analytics": "Analytics",
+            "catalog": "Catalog",
         }
     },
     "ar": {
@@ -25,6 +26,7 @@ export const resources = {
             "inventory": "البريد",
             "security": "الإلكتروني",
             "analytics": "تسجيل",
+            "catalog ": "تسجيل ",
         }
     },
     "ms": {

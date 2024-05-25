@@ -20,7 +20,7 @@ function Sidebar({ isOpen, subMenuHandler }) {
                 <li class="active hover:bg-cyan-400">
                     <a onClick={() => { subMenuHandler('show') }}>
                         <i class="ri-flashlight-line"></i>
-                        <span class="link_name">{t('flash')}</span>
+                        <span class="link_name">{t('catalog')}</span>
                     </a>
                 </li>
                 <li class="active hover:bg-cyan-400">
