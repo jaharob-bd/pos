@@ -7,15 +7,11 @@ import { useForm } from '@inertiajs/react';
 import { List } from './List';
 import Swal from 'sweetalert2';
 
-export default function Index({ auth }) {
+export default function Index({ auth, products }) {
     // initial value for set form
-    const initialValues = {
-        name: '',
-        url_key: '',
-        sku: '',
-        product_code: ''
-    }
+    const initialValues = { name: '', url_key: '', sku: '', product_code: '' }
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const [item, setItem] = useState(products);
     const { data, setData, processing, reset, post, errors } = useForm(initialValues);
     // console.log(errors);
     const { t } = useTranslation();
@@ -75,7 +71,7 @@ export default function Index({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user} header={'Product List'}>
             <Head title="Product" />
-            <List openModal={openModal} />
+            <List openModal={openModal} products={products} />
             <Modal show={isOpenModal} title='Create New Product' maxWidth='2xl' onClose={closeModal}>
                 <div>
                     <form onSubmit={handleSubmit} className="p-2 mx-auto dark:bg-gray-800">

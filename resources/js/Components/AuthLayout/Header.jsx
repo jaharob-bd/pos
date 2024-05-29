@@ -112,7 +112,6 @@ const Header = ({ handleToggle }) => {
                         </div>
                     </div>
                 </li>
-
                 <li className="dropdown">
                     <button type="button" className="dropdown-toggle text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600">
                         <i className="ri-notification-3-line" />
@@ -220,8 +219,8 @@ const Header = ({ handleToggle }) => {
                         </div>
                     </div>
                 </li>
-                <li className="mt-1 mb-1">
-                    <select className="" style={{ width: 130, height: 40 }} onChange={changeLanguageHandler}>
+                <li className="">
+                    <select className="py-1 px-5" style={{ width: 130, height: 35 }} onChange={changeLanguageHandler}>
                         <option value="" >Languages</option>
                         <option value="en" >English</option>
                         <option value="ar" >Arabic</option>

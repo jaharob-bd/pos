@@ -26,7 +26,7 @@ export const resources = {
             "inventory": "البريد",
             "security": "الإلكتروني",
             "analytics": "تسجيل",
-            "catalog ": "تسجيل ",
+            "catalog": "تسجيل",
         }
     },
     "ms": {
