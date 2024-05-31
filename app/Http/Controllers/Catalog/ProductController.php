@@ -38,12 +38,26 @@ class ProductController extends Controller
 
     function edit($slug)
     {
-        $data['product'] = Product::where('url_key', $slug)->first();
+        $data['product'] = Product::with('productCategory')
+            ->with('images')
+            ->with('variantPrices')
+            ->with('groupPrices')
+            ->where('url_key', $slug)->first();
+        // return $data['product']; exit;
         return Inertia::render('Catalog/Product/Edit', $data);
     }
 
-    function updated(Request $request, $slug)
+    function update(Request $request, $id)
     {
-        return Inertia::render('Catalog/Product/Edit');
+        $product = Product::findOrFail($id);
+        $product->name = $request->name;
+        $product->url_key = $request->url_key;
+        $product->sku = $request->sku;
+        $product->product_code = $request->product_code;
+        $product->short_description = $request->short_description;
+        $product->description = $request->description;
+        $product->save();
+        Session::flash('success', 'Product updated successfully!');
+        return redirect()->route('product-edit', ['slug' => $product->url_key]);
     }
 }

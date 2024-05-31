@@ -26,7 +26,7 @@ const Header = ({ handleToggle }) => {
                         <i className="ri-search-line" />
                     </button>
                     <div className="dropdown-menu shadow-md shadow-black/5 z-30 hidden max-w-xs w-full bg-white rounded-md border border-gray-100">
-                        <form action className="p-4 border-b border-b-gray-100">
+                        <form className="p-4 border-b border-b-gray-100">
                             <div className="relative w-full">
                                 <input type="text" className="py-2 pr-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500" placeholder="Search..." />
                                 <i className="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
@@ -38,7 +38,7 @@ const Header = ({ handleToggle }) => {
                             <ul className="max-h-64 overflow-y-auto">
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -47,7 +47,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -56,7 +56,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -65,7 +65,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -74,7 +74,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -83,7 +83,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -92,7 +92,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -101,7 +101,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">Create landing page</div>
                                             <div className="text-[11px] text-gray-400">$345</div>
@@ -125,7 +125,7 @@ const Header = ({ handleToggle }) => {
                             <ul className="max-h-64 overflow-y-auto" data-tab-for="notification" data-page="notifications">
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">New order</div>
                                             <div className="text-[11px] text-gray-400">from a user</div>
@@ -134,7 +134,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">New order</div>
                                             <div className="text-[11px] text-gray-400">from a user</div>
@@ -143,7 +143,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">New order</div>
                                             <div className="text-[11px] text-gray-400">from a user</div>
@@ -152,7 +152,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">New order</div>
                                             <div className="text-[11px] text-gray-400">from a user</div>
@@ -161,7 +161,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">New order</div>
                                             <div className="text-[11px] text-gray-400">from a user</div>
@@ -172,7 +172,7 @@ const Header = ({ handleToggle }) => {
                             <ul className="max-h-64 overflow-y-auto hidden" data-tab-for="notification" data-page="messages">
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">John Doe</div>
                                             <div className="text-[11px] text-gray-400">Hello there!</div>
@@ -181,7 +181,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">John Doe</div>
                                             <div className="text-[11px] text-gray-400">Hello there!</div>
@@ -190,7 +190,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">John Doe</div>
                                             <div className="text-[11px] text-gray-400">Hello there!</div>
@@ -199,7 +199,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">John Doe</div>
                                             <div className="text-[11px] text-gray-400">Hello there!</div>
@@ -208,7 +208,7 @@ const Header = ({ handleToggle }) => {
                                 </li>
                                 <li>
                                     <a href="#" className="py-2 px-4 flex items-center hover:bg-gray-50 group">
-                                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                                         <div className="ml-2">
                                             <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">John Doe</div>
                                             <div className="text-[11px] text-gray-400">Hello there!</div>
@@ -228,7 +228,7 @@ const Header = ({ handleToggle }) => {
                 </li>
                 <li className="dropdown ml-3">
                     <button type="button" className="dropdown-toggle flex items-center">
-                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded block object-cover align-middle" />
+                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                     </button>
                     <ul className="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
                         <li>

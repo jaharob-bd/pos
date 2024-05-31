@@ -48,14 +48,14 @@ export const List = ({ openModal, products }) => {
                         </thead>
                         <tbody>
                             {
-                                products.map(product => 
-                                    (
+                                products.map(product =>
+                                (
                                     <tr key={product.id} className="product">
                                         <td className="px-5 py-5"><input type="checkbox" className="from-control" /></td>
                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div className="flex">
                                                 <div className="flex-shrink-0 w-10 h-10">
-                                                    <img className="w-full h-full rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80" alt />
+                                                    <img className="w-full h-full rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80" alt="" />
                                                 </div>
                                                 <div className="ml-3">
                                                     <p className="text-gray-900 whitespace-no-wrap">
@@ -80,7 +80,7 @@ export const List = ({ openModal, products }) => {
                                             </span>
                                         </td>
                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                            <Link href="#" type="button" className="inline-block text-gray-500 hover:text-gray-700">
+                                            <Link href={`product-edit/${product.url_key}`} type="button" className="inline-block text-gray-500 hover:text-gray-700">
                                                 < i class="ri-edit-circle-line"></i>
                                             </Link>
                                         </td>

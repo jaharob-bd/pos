@@ -429,7 +429,7 @@ export default function Dashboard({ auth }) {
                             </ul>
                         </div>
                     </div>
-                    <form action className="flex items-center mb-4">
+                    <form className="flex items-center mb-4">
                         <div className="relative w-full mr-2">
                             <input type="text" className="py-2 pr-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500" placeholder="Search..." />
                             <i className="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />

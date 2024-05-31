@@ -32,8 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products');
     Route::post('/product-store', [ProductController::class, 'store'])->name('product-store');
     Route::get('/product-edit/{slug}', [ProductController::class, 'edit'])->name('product-edit');
-    Route::post('/product-updated', [ProductController::class, 'updated'])->name('product-updated');
-    
+    Route::patch('/product-update/{id}', [ProductController::class, 'update'])->name('product-update');
+    // Route::patch('/product-update/{id}', [ProductController::class, 'update'])->withoutMiddleware('auth');
+
+
     // Purchase
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('purchase');
     Route::post('/purchase-store', [PurchaseController::class, 'store'])->name('purchase-store');
