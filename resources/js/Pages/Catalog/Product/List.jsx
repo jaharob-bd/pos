@@ -12,7 +12,7 @@ export const List = ({ openModal, products }) => {
                             <div>
                                 <button
                                     className="text-gray-900 text-gray-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-1 text-center me-2 mb-2 hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                                    < i class="ri-export-fill"></i>
+                                    < i className="ri-export-fill"></i>
                                     Export
                                 </button>
                             </div>
@@ -81,7 +81,7 @@ export const List = ({ openModal, products }) => {
                                         </td>
                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
                                             <Link href={`product-edit/${product.url_key}`} type="button" className="inline-block text-gray-500 hover:text-gray-700">
-                                                < i class="ri-edit-circle-line"></i>
+                                                < i className="ri-edit-circle-line"></i>
                                             </Link>
                                         </td>
                                     </tr>
