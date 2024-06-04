@@ -92,6 +92,7 @@ class ProductController extends Controller
 
     function variantPrice(Request $request, $id)
     {
+        dd($request->all());
         $product = Product::findOrFail($id);
         $product->name = $request->name;
         $product->url_key = $request->url_key;

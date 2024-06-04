@@ -45,7 +45,7 @@ export const EditImageUpload = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 mb-2">
                         {/* Upload section */}
-                        <div className="mt-1 flex justify-center px-2 pt-2 pb-2 border-2 border-black border-dashed rounded-md">
+                        <div className="mt-1 flex justify-center px-1 pt-1 pb-1 border-2 border-black border-dashed rounded-md">
                             <div className="space-y-1 text-center">
                                 <svg className="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
@@ -70,27 +70,23 @@ export const EditImageUpload = (props) => {
                         </div>
                         {/* Preview section */}
                         {props.product.images.map((image, index) => (
-                            <div key={index} className="mt-1 flex justify-center px-2 pt-2 pb-2 border-2 border-black border-dashed rounded-md">
-                                {/* <img
-                                            src={URL.createObjectURL(image)}
-                                            alt={`preview-${index}`}
-                                            className="h-24 w-24 object-cover" /> */}
+                            <div key={index} className="mt-1 flex justify-center px-1 pt-1 pb-2 border-2 border-black border-dashed rounded-md">
                                 <img
-                                    src={props.url.base_url + '/' + image.img_src}
+                                    src={baseUrl + '/' + image.img_src}
                                     alt={image.img_alt || `preview-${index}`}
                                     className="h-24 w-24 object-cover" />
                             </div>
                         ))}
-
                         {/* Additional divs if there are fewer than 4 images */}
                         {Array.from({ length: 3 - props.product.images.length }).map((_, index) => (
-                            <div key={index} className="mt-1 flex justify-center px-14 pt-5 pb-6 border-2 border-black border-dashed rounded-md">
+                            <div key={'index'} className="mt-1 flex justify-center px-14 pt-5 pb-6 border-2 border-black border-dashed rounded-md">
                                 <svg className="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
                         ))}
-                        <div className="mt-1 flex justify-center pl-0 px-14 pt-10 pb-6">
+
+                        <div className="mt-1 flex justify-center pl-0 px-14 pt-05 pb-0">
                             <button type="submit" disabled={processing}>
                                 <span className="text-5xl"><i className="ri-upload-cloud-line"></i></span>
                             </button>

@@ -4,6 +4,7 @@ import { Head, Link, router, useForm } from '@inertiajs/react';
 import Swal from 'sweetalert2';
 import EditSideBar from './Partials/EditSideBar';
 import { EditImageUpload } from './Partials/EditImageUpload';
+import EditPrice from './Partials/EditPrice';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Edit = (props) => {
@@ -162,86 +163,8 @@ const Edit = (props) => {
                             </div>
                         </div>
                     </form>
-                   <EditImageUpload { ...props}/>
-                    <hr className="bg-gray-300 my-3" />
-                    <h2 id="price" className="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">Price</h2>
-                    <div className="p-2 mt-3 lg:mt-0 rounded shadow bg-gray-100">
-                        <form>
-                            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                                <div className="min-[320px]:text-center max-[600px]:bg-white-300 flex-grow w-full md:w-1/2 p-1">
-                                    <div className="flex justify-start datas-center mb-2">
-                                        <button type="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 inline-flex datas-start justify-start px-6 py-2 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded">
-                                            <p className="text-sm font-medium leading-none text-white">Add Product Variant Price</p>
-                                        </button>
-                                    </div>
-                                    <table className="table-fixed w-full border border-gray-300 pt-2">
-                                        <thead>
-                                            <tr className="border-b border-gray-300">
-                                                <th className="border-r border-gray-300">Variant</th>
-                                                <th className="border-r border-gray-300">Buy Price</th>
-                                                <th className="border-r border-gray-300">Sale Price</th>
-                                                <th />
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr className="border-b border-gray-300">
-                                                <td className="border-r border-gray-300">Witchy Woman</td>
-                                                <td className="border-r border-gray-300">The Eagles</td>
-                                                <td className="border-r border-gray-300">1972</td>
-                                                <td className="border-r border-gray-300">
-                                                    <i className="ri-close-circle-fill" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="border-r border-gray-300">Witchy Woman</td>
-                                                <td className="border-r border-gray-300">The Eagles</td>
-                                                <td className="border-r border-gray-300">1972</td>
-                                                <td className="border-r border-gray-300">
-                                                    <i className="ri-close-circle-fill" />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div className="min-[320px]:text-center max-[600px]:bg-sky-300 flex-grow w-full md:w-1/2 p-1">
-                                    <div className="flex justify-end datas-center mb-2">
-                                        <button type="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 inline-flex datas-start justify-start px-6 py-2 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded">
-                                            <p className="text-sm font-medium leading-none text-white">Add Customer Group Price</p>
-                                        </button>
-                                    </div>
-                                    <table className="table-fixed w-full border border-gray-300">
-                                        <thead>
-                                            <tr className="border-b border-gray-300">
-                                                <th className="border-r border-gray-300">Cust. Group</th>
-                                                <th className="border-r border-gray-300">Qty</th>
-                                                <th className="border-r border-gray-300">Price</th>
-                                                <th />
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr className="border-b border-gray-300">
-                                                <td className="border-r border-gray-300">Witchy Woman</td>
-                                                <td className="border-r border-gray-300">The Eagles</td>
-                                                <td className="border-r border-gray-300">1972</td>
-                                                <td className="border-r border-gray-300">
-                                                    <i className="ri-close-circle-fill" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="border-r border-gray-300">Witchy Woman</td>
-                                                <td className="border-r border-gray-300">The Eagles</td>
-                                                <td className="border-r border-gray-300">1972</td>
-                                                <td className="border-r border-gray-300">
-                                                    <i className="ri-close-circle-fill" />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            {/* end */}
-                        </form>
-                    </div>
+                    <EditImageUpload {...props} />
+                    <EditPrice {...props} />
                     <hr className="bg-gray-300 my-3" />
                     <h2 id="videos" className="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">Videos</h2>
                     <div className="p-8 mt-6 lg:mt-0 rounded shadow bg-gray-100">

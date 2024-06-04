@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/product-edit/{slug}', [ProductController::class, 'edit'])->name('product-edit');
     Route::patch('/product-update/{id}', [ProductController::class, 'update'])->name('product-update');
     Route::post('/product-image-upload/{id}', [ProductController::class, 'imageUpload'])->name('product-image-upload');
-    Route::patch('/product-variant-price/{id}', [ProductController::class, 'variantPrice'])->name('product-variant-price');
+    Route::post('/product-variant-price/{id}', [ProductController::class, 'variantPrice'])->name('product-variant-price');
     
     // Purchase
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('purchase');
