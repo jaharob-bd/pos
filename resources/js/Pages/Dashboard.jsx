@@ -62,11 +62,11 @@ export default function Dashboard({ auth }) {
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded-full object-cover block" />
-                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded-full object-cover block -ml-3" />
-                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded-full object-cover block -ml-3" />
-                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded-full object-cover block -ml-3" />
-                        <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded-full object-cover block -ml-3" />
+                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded-full object-cover block" />
+                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded-full object-cover block -ml-3" />
+                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded-full object-cover block -ml-3" />
+                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded-full object-cover block -ml-3" />
+                        <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded-full object-cover block -ml-3" />
                     </div>
                 </div>
                 <div className="bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5">
@@ -131,7 +131,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -148,7 +148,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -165,7 +165,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -182,7 +182,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -199,7 +199,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -228,7 +228,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -245,7 +245,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -262,7 +262,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -279,7 +279,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -296,7 +296,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -325,7 +325,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -342,7 +342,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -359,7 +359,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -376,7 +376,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -393,7 +393,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -452,7 +452,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -482,7 +482,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -512,7 +512,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -542,7 +542,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -572,7 +572,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -681,7 +681,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -695,7 +695,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -709,7 +709,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -723,7 +723,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -737,7 +737,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -751,7 +751,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -765,7 +765,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -779,7 +779,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -793,7 +793,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>
@@ -807,7 +807,7 @@ export default function Dashboard({ auth }) {
                                 <tr>
                                     <td className="py-2 px-4 border-b border-b-gray-50">
                                         <div className="flex items-center">
-                                            <img src="https://placehold.co/32x32" alt className="w-8 h-8 rounded object-cover block" />
+                                            <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded object-cover block" />
                                             <a href="#" className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate">Create landing page</a>
                                         </div>
                                     </td>

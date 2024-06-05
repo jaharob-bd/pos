@@ -28,20 +28,11 @@ const EditPrice = (props) => {
         const { name, value } = event.target;
         setData((prevData) => {
             let updatedData = { ...prevData, [name]: value };
-            if ((name === 'sale_price' || name === 'mrp_price') && parseFloat(value) < parseFloat(prevData.buy_price)) {
-                Swal.fire({
-                    text: 'Sale & MRP price cannot be less than buying price.',
-                    icon: 'warning',
-                    position: 'top-end',
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                });
-                updatedData.sale_price = prevData.buy_price;
-            }
             return updatedData;
         });
+        console.log(data)
+        // router.post(`/product-variant-price/${productId}`, data);
+
     };
 
     // submit handler
