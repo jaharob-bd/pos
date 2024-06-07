@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductGroupPrice extends Model
 {
     use HasFactory;
-    protected $fillable = ['product_id', 'customer_group_id', 'qty', 'discount_type', 'status'];
+    protected $fillable = ['product_id', 'customer_group_id', 'qty', 'discount_type', 'amount', 'status'];
 
     public function product()
     {

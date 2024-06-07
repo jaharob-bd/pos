@@ -8,6 +8,7 @@ import EditPrice from './Partials/EditPrice';
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Edit = (props) => {
+    // console.log(props.product)
     const [user, setUser] = useState(props.auth.user);
     const [initial, setInitial] = useState(props.product);
     const { data, setData, reset, post } = useForm(initial);
@@ -40,10 +41,6 @@ const Edit = (props) => {
             },
         });
     };
-
-
-
-
 
     return (
         <AuthenticatedLayout user={user} header={'Product List'}>

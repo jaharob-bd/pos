@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/product-update/{id}', [ProductController::class, 'update'])->name('product-update');
     Route::post('/product-image-upload/{id}', [ProductController::class, 'imageUpload'])->name('product-image-upload');
     Route::post('/product-variant-price/{id}', [ProductController::class, 'variantPrice'])->name('product-variant-price');
+    Route::post('/product-group-price/{id}', [ProductController::class, 'groupPrice'])->name('product-group-price');
     
     // Purchase
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('purchase');

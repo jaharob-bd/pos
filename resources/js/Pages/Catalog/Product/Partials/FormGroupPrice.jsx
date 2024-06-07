@@ -1,13 +1,17 @@
 import React from 'react'
 
-export const FormGroupPrice = () => {
+export const FormGroupPrice = ({ onChangeInput, handleSubmit }) => {
     return (
         <div>
-            <form className="p-2 mx-auto dark:bg-gray-800">
+            <form onSubmit={handleSubmit} className="p-2 mx-auto dark:bg-gray-800">
                 <div className="grid grid-cols-1 gap-1 sm:grid-cols-4">
                     <div>
                         <label className="dark:text-gray-200" htmlFor="name">Group Name <span className="text-red-600">*</span></label>
-                        <select name="" id="" className="form-input block w-full focus:bg-white p-1">
+                        <select
+                            name="customer_group_id"
+                            onChange={onChangeInput}
+                            className="form-input block w-full focus:bg-white p-1"
+                        >
                             <option value="">-Select-</option>
                             <option value="1">Wholesaler</option>
                             <option value="2">Resaler</option>
@@ -17,32 +21,33 @@ export const FormGroupPrice = () => {
                     </div>
                     <div>
                         <label className="dark:text-gray-200" htmlFor="url_key">Discount Type <span className="text-red-600">*</span></label>
-                        <select name="" id="" className="form-input block w-full focus:bg-white p-1">
+                        <select
+                            name="discount_type"
+                            onChange={onChangeInput}
+                            className="form-input block w-full focus:bg-white p-1"
+                        >
                             <option value="">-Select-</option>
                             <option value="1">Fixed</option>
                             <option value="2">Percentage</option>
                         </select>
-                        {/* <input
-                            name="url_key"
-                            type="text"
-                            className="form-input block w-full focus:bg-white p-1"
-                        /> */}
                     </div>
                     <div>
                         <label className="dark:text-gray-200" htmlFor="sku">Quantity <span className="text-red-600">*</span></label>
                         <input
-                            name="sku"
-                            type="text"
+                            name="qty"
+                            type="number"
+                            onChange={onChangeInput}
                             className="form-input block w-full focus:bg-white p-1"
                         />
                     </div>
                     <div>
-                        <label className="dark:text-gray-200" htmlFor="product_code">Price
+                        <label className="dark:text-gray-200" htmlFor="product_code">Amount
                             <span className="text-red-600">*</span>
                         </label>
                         <input
-                            name="product_code"
-                            type="text"
+                            name="amount"
+                            type="number"
+                            onChange={onChangeInput}
                             className="form-input block w-full focus:bg-white p-1"
                         />
                     </div>

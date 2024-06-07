@@ -14,7 +14,9 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Catalog\Product;
 use App\Http\Requests\Catalog\Product\StoreProductRequest;
-
+use App\Http\Requests\Catalog\Product\VariantPriceRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -90,18 +92,47 @@ class ProductController extends Controller
         return redirect()->route('product-edit', ['slug' => $product->url_key]);
     }
 
-    function variantPrice(Request $request, $id)
+    function variantPrice(VariantPriceRequest $request, $id)
     {
-        dd($request->all());
         $product = Product::findOrFail($id);
-        $product->name = $request->name;
-        $product->url_key = $request->url_key;
-        $product->sku = $request->sku;
-        $product->product_code = $request->product_code;
-        $product->short_description = $request->short_description;
-        $product->description = $request->description;
-        $product->save();
-        Session::flash('success', 'Product updated successfully!');
+        try {
+            // Start transaction
+            DB::beginTransaction();
+            // Insert variant price data
+            $product->variantPrices()->create([
+                'variant_name' => $request->variant_name,
+                'buy_price' => $request->buy_price,
+                'sale_price' => $request->sale_price,
+                'mrp_price' => $request->mrp_price,
+                'status' => 1
+            ]);
+
+            // Commit transaction
+            DB::commit();
+            Session::flash('success', 'Product updated successfully!');
+            return redirect()->route('product-edit', ['slug' => $product->url_key]);
+        } catch (\Exception $e) {
+            // Rollback transaction in case of error
+            DB::rollBack();
+            Session::flash('failed', $e->getMessage());
+            return redirect()->route('product-edit', ['slug' => $product->url_key]);
+        } 
+    }
+
+    function groupPrice(Request $request, $id)
+    {
+        // dd($request->all());
+        $product = Product::findOrFail($id);
+        // Insert image data
+        $product->groupPrices()->create([
+            'customer_group_id' => $request->customer_group_id ?: '',
+            'discount_type' => $request->discount_type ?: '',
+            'qty' => $request->qty ?: '',
+            'amount' => $request->amount ?: '',
+            'status' => 1
+        ]);
+
+        Session::flash('success', 'Product price updated successfully!');
         return redirect()->route('product-edit', ['slug' => $product->url_key]);
     }
 }

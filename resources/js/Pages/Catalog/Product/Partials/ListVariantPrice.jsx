@@ -14,7 +14,7 @@ export const ListVariantPrice = ({variants}) => {
             </thead>
             <tbody>
                 {variants &&
-                    variants.map((vPrice, index) => {
+                    variants?.map((vPrice, index) => {
                         return (
                             <tr key={index} className="border-b border-gray-300">
                                 <td className="border-r border-gray-300">{vPrice.variant_name}</td>

@@ -13,6 +13,7 @@ const determineActiveMenu = () => {
 
 export default function Authenticated({ user, header, children, props }) {
   const { flash } = usePage().props;
+  const { errors } = usePage().props;
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenSubMenu, setIsOpenSubMenu] = useState('hide');
   // console.log(props);
@@ -30,21 +31,10 @@ export default function Authenticated({ user, header, children, props }) {
     handleSidebarState();
     if (flash) {
       // validation error
-      if (flash.errors && flash.errors.length > 0) {
-        Swal.fire({
-          title: 'Validation Errors',
-          html: '<ul>' + flash.error.map(err => `<li>${err}</li>`).join('') + '</ul>',
-          icon: 'error',
-          timer: 5000,
-          timerProgressBar: true,
-        });
-      }
       if (flash.failed) {
         Swal.fire({
-          text: flash.error,
+          text: flash.failed,
           icon: 'error',
-          timer: 5000,
-          timerProgressBar: true,
         });
       }
       if (flash.warning) {
@@ -64,7 +54,19 @@ export default function Authenticated({ user, header, children, props }) {
         });
       }
     }
-  }, [flash]);
+    if (errors) {
+      if (errors && Object.keys(errors).length > 0) {
+        const errorMessages = '<ul>' + Object.values(errors).map(err => `<li>${err}</li>`).join('') + '</ul>';
+        Swal.fire({
+          title: 'Validation Errors!',
+          html: errorMessages,
+          icon: 'error',
+          timer: 5000,
+          timerProgressBar: true,
+        });
+      }
+    }
+  }, [flash, errors]);
 
 
   const handleOverlayClick = () => {
