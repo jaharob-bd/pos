@@ -35,7 +35,7 @@ function EditSideBar() {
                             <span className="pb-1 md:pb-0 text-sm">Price</span>
                         </a>
                     </li>
-                    <li className="py-1 md:my-1 hover:bg-indigo-100 lg:hover:bg-transparent border-l-4 border-transparent">
+                    {/* <li className="py-1 md:my-1 hover:bg-indigo-100 lg:hover:bg-transparent border-l-4 border-transparent">
                         <a href="#videos" className="block pl-4 align-middle text-gray-700 no-underline hover:text-indigo-600">
                             <span className="pb-1 md:pb-0 text-sm">Videos</span>
                         </a>
@@ -44,7 +44,7 @@ function EditSideBar() {
                         <a href="#others" className="block pl-4 align-middle text-gray-700 no-underline hover:text-indigo-600">
                             <span className="pb-1 md:pb-0 text-sm">Others</span>
                         </a>
-                    </li>
+                    </li> */}
                     <li className="py-1 md:my-1 hover:bg-indigo-100 lg:hover:bg-transparent border-l-4 border-transparent">
                         <a href="#settings" className="block pl-4 align-middle text-gray-700 no-underline hover:text-indigo-600">
                             <span className="pb-1 md:pb-0 text-sm">Settings</span>

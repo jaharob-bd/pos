@@ -5,7 +5,10 @@ import Swal from 'sweetalert2';
 import EditSideBar from './Partials/EditSideBar';
 import { EditImageUpload } from './Partials/EditImageUpload';
 import EditPrice from './Partials/EditPrice';
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
+import { EditSetting } from './Partials/EditSetting';
+
+// import EditOthers from './Partials/EditOthers';
+// import EditVideo from './Partials/EditVideo';
 
 const Edit = (props) => {
     // console.log(props.product)
@@ -162,54 +165,10 @@ const Edit = (props) => {
                     </form>
                     <EditImageUpload {...props} />
                     <EditPrice {...props} />
-                    <hr className="bg-gray-300 my-3" />
-                    <h2 id="videos" className="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">Videos</h2>
-                    <div className="p-8 mt-6 lg:mt-0 rounded shadow bg-gray-100">
-                        <blockquote className="border-l-4 border-indigo-600 italic my-4 pl-8 md:pl-12">Final confirmation disclaimer message etc</blockquote>
-                        <div className="pt-8">
-                            <button className="shadow bg-indigo-700 hover:bg-indigo-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
-                                Save
-                            </button>
-                            <button className="shadow bg-indigo-100 hover:bg-indigo-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
-                                Additional Action
-                            </button>
-                            <button className="shadow bg-indigo-100 hover:bg-indigo-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded" type="button">
-                                Additional Action
-                            </button>
-                        </div>
-                    </div>
-                    <hr className="bg-gray-300 my-3" />
-                    <h2 id="others" className="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">Others</h2>
-                    <div className="p-8 mt-6 lg:mt-0 rounded shadow bg-gray-100">
-                        <blockquote className="border-l-4 border-indigo-600 italic my-4 pl-8 md:pl-12">Final confirmation disclaimer message etc</blockquote>
-                        <div className="pt-8">
-                            <button className="shadow bg-indigo-700 hover:bg-indigo-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
-                                Save
-                            </button>
-                            <button className="shadow bg-indigo-100 hover:bg-indigo-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
-                                Additional Action
-                            </button>
-                            <button className="shadow bg-indigo-100 hover:bg-indigo-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded" type="button">
-                                Additional Action
-                            </button>
-                        </div>
-                    </div>
-                    <hr className="bg-gray-300 my-3" />
-                    <h2 id="settings" className="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">Settings</h2>
-                    <div className="p-8 mt-6 lg:mt-0 rounded shadow bg-gray-100">
-                        <blockquote className="border-l-4 border-indigo-600 italic my-4 pl-8 md:pl-12">Final confirmation disclaimer message etc</blockquote>
-                        <div className="pt-8">
-                            <button className="shadow bg-indigo-700 hover:bg-indigo-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
-                                Save
-                            </button>
-                            <button className="shadow bg-indigo-100 hover:bg-indigo-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
-                                Additional Action
-                            </button>
-                            <button className="shadow bg-indigo-100 hover:bg-indigo-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded" type="button">
-                                Additional Action
-                            </button>
-                        </div>
-                    </div>
+                    {/* <EditOthers /> */}
+                    {/* <EditVideo /> */}
+                    <EditSetting product ={props.product} />
+
                 </section>
                 <div className="w-full lg:w-5/6 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12">
                     <span className="text-base text-indigo-600 font-bold">&lt;</span> <a href="#" className="text-base md:text-sm text-indigo-600 font-bold no-underline hover:underline">Back link</a>
