@@ -14,23 +14,29 @@ const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
                     </Link>
                 </li>
                 <li>
-                    <Link className="sub_link_name squared">
+                    <Link href={route('categories')} className="sub_link_name squared">
                         <span className="ml-2">Categories</span>
                     </Link>
                 </li>
                 <li>
-                    <Link className="sub_link_name squared">
-                        <span className="ml-2">Varients</span>
+                    <Link href={route('brands')} className="sub_link_name squared">
+                        <span className="ml-2">Bands</span>
                     </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link className="sub_link_name squared">
                         <span className="ml-2">Attributes</span>
                     </Link>
+                </li> */}
+                <h6 className="px-7 front-bold">Customer</h6>
+                <li>
+                    <Link href={route('customers')} className="sub_link_name squared">
+                        <span className="ml-2">Customer</span>
+                    </Link>
                 </li>
                 <li>
-                    <Link className="sub_link_name squared">
-                        <span className="ml-2">Bands</span>
+                    <Link href={route('customer-groups')} className="sub_link_name squared">
+                        <span className="ml-2">Customer Group</span>
                     </Link>
                 </li>
             </ul>

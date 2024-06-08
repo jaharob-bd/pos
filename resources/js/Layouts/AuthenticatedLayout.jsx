@@ -84,8 +84,8 @@ export default function Authenticated({ user, header, children, props }) {
 
   return (
     <div>
-      <Sidebar isOpen={isOpen} subMenuHandler={subMenuHandler} />
-      <SubMenu isOpenSubMenu={isOpenSubMenu} subMenuHandler={subMenuHandler} />
+      <Sidebar isOpen={isOpen} subMenuHandler={subMenuHandler} /> 
+      <SubMenu isOpenSubMenu={isOpenSubMenu} subMenuHandler={subMenuHandler} /> 
       <SidebarOverlay isOpen={isOpen} handleOverlayClick={handleOverlayClick} />
       <main className={`flex flex-col pl-2 ${isOpen ? 'ml-20' : 'w-full'}`}>
         <Header handleToggle={handleToggle} />
@@ -94,6 +94,5 @@ export default function Authenticated({ user, header, children, props }) {
         </div>
       </main>
     </div>
-
   );
 }
