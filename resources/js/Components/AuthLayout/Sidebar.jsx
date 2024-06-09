@@ -31,6 +31,18 @@ function Sidebar({ isOpen, subMenuHandler }) {
                 </li>
                 <li className="active hover:bg-cyan-400">
                     <a onClick={() => { subMenuHandler('show') }}>
+                        <i className="ri-flashlight-line"></i>
+                        <span className="link_name">{t('supplier')}</span>
+                    </a>
+                </li>
+                <li className="active hover:bg-cyan-400">
+                    <a onClick={() => { subMenuHandler('show') }}>
+                        <i className="ri-flashlight-line"></i>
+                        <span className="link_name">{t('Purchase')}</span>
+                    </a>
+                </li>
+                <li className="active hover:bg-cyan-400">
+                    <a onClick={() => { subMenuHandler('show') }}>
                         <i className="ri-instance-line"></i>
                         <span className="link_name">{t('invoice')}</span>
                     </a>

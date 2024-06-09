@@ -7,6 +7,7 @@ use App\Http\Controllers\Consumer\CustomerController;
 use App\Http\Controllers\Consumer\CustomerCommonController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Supplier\SupplierController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,6 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer-group-store', [CustomerCommonController::class, 'customer_group_store'])->name('customer-group-store');
     Route::post('/customer-group-update/{id}', [CustomerCommonController::class, 'customer_group_update'])->name('customer-group-update');
     Route::get('/customer-group-edit/{id}', [CustomerCommonController::class, 'customer_group_edit'])->name('customer-group-edit');
+    // Supplier Module
+    Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
+    Route::post('/supplier-store', [SupplierController::class, 'store'])->name('supplier-store');
+    Route::post('/supplier-update/{id}', [SupplierController::class, 'update'])->name('supplier-update');
 
     // Purchase
     Route::get('/purchase', [PurchaseController::class, 'index'])->name('purchase');
@@ -65,4 +70,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/invoice-store', [ProfileController::class, 'store'])->name('invoice-store');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

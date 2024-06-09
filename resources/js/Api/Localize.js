@@ -8,11 +8,12 @@ export const resources = {
             "dashboard": "Dashboard",
             "flash": "Flash",
             "invoice": "Invoice",
-            "inventory": "Invoice",
+            "inventory": "Inventory",
             "security": "Security",
             "analytics": "Analytics",
             "catalog": "Catalog",
             "consumer": "Consumer",
+            "supplier": "Supplier",
         }
     },
     "ar": {
@@ -29,6 +30,7 @@ export const resources = {
             "analytics": "تسجيل",
             "catalog": "تسجيل",
             "consumer": "تسجيل",
+            "supplier": "تسجيل",
         }
     },
     "ms": {

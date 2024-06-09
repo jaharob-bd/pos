@@ -51,7 +51,7 @@ export const List = ({ openModal, products }) => {
                                 products.map(product =>
                                 (
                                     <tr key={product.id} className="product">
-                                        <td className="px-5 py-5"><input type="checkbox" className="from-control" /></td>
+                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm"><input type="checkbox" className="from-control" /></td>
                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div className="flex">
                                                 <div className="flex-shrink-0 w-10 h-10">
