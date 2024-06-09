@@ -6,12 +6,42 @@ import EditSideBar from './Partials/EditSideBar';
 import { EditImageUpload } from './Partials/EditImageUpload';
 import EditPrice from './Partials/EditPrice';
 import { EditSetting } from './Partials/EditSetting';
+import { CategoriesDropDrown } from './Partials/CategoriesDropDrown';
 
+const COUNTRIES = [
+    "Austria",
+    "Belgium",
+    "Croatia",
+    "Bulgaria",
+    "Cyprus",
+    "Czech Republic",
+    "Denmark",
+    "Estonia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hungary",
+    "Ireland",
+    "Italy",
+    "Latvia",
+    "Lithuania",
+    "Luxembourg",
+    "Malta",
+    "Netherlands",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Sweden",
+    "Ukraine",
+];
 // import EditOthers from './Partials/EditOthers';
 // import EditVideo from './Partials/EditVideo';
 
 const Edit = (props) => {
-    // console.log(props.product)
     const [user, setUser] = useState(props.auth.user);
     const [initial, setInitial] = useState(props.product);
     const { data, setData, reset, post } = useForm(initial);
@@ -117,6 +147,26 @@ const Edit = (props) => {
                                     />
                                 </div>
                             </div>
+                            {/* multi categories start */}
+                            <div className="md:flex mb-2">
+                                <div className="md:w-1/3">
+                                    <label className="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" htmlFor="my-textfield">
+                                        Product Categories <span className="text-red-600">*</span>
+                                    </label>
+                                </div>
+                                <div className="md:w-2/3">
+                                    <CategoriesDropDrown
+                                        formFieldName={"countries"}
+                                        options={props.categories}
+                                        onChange={(selectedCountries) => {
+                                            console.debug("selectedCategories", selectedCountries);
+                                        }}
+                                        prompt="Select one or more categories"
+                                    />
+                                </div>
+                            </div>
+                           
+                            {/* end */}
                         </div>
                         <hr className="bg-gray-300 my-3" />
                         <h2 id="description" className="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">Description</h2>
@@ -167,7 +217,7 @@ const Edit = (props) => {
                     <EditPrice {...props} />
                     {/* <EditOthers /> */}
                     {/* <EditVideo /> */}
-                    <EditSetting product ={props.product} />
+                    <EditSetting product={props.product} />
 
                 </section>
                 <div className="w-full lg:w-5/6 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12">

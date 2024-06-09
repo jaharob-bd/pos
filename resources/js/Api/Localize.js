@@ -12,6 +12,7 @@ export const resources = {
             "security": "Security",
             "analytics": "Analytics",
             "catalog": "Catalog",
+            "consumer": "Consumer",
         }
     },
     "ar": {
@@ -27,6 +28,7 @@ export const resources = {
             "security": "الإلكتروني",
             "analytics": "تسجيل",
             "catalog": "تسجيل",
+            "consumer": "تسجيل",
         }
     },
     "ms": {

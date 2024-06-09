@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Catalog\Product;
 use App\Http\Requests\Catalog\Product\StoreProductRequest;
 use App\Http\Requests\Catalog\Product\VariantPriceRequest;
+use App\Models\Catalog\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -45,6 +46,9 @@ class ProductController extends Controller
             ->with('variantPrices')
             ->with('groupPrices')
             ->where('url_key', $slug)->first();
+        // category
+        $data['categories'] = Category::select('id', 'name')->get();
+        // return $data['category'];
         // return $data['product']; exit;
         return Inertia::render('Catalog/Product/Edit', $data);
     }
@@ -116,7 +120,7 @@ class ProductController extends Controller
             DB::rollBack();
             Session::flash('failed', $e->getMessage());
             return redirect()->route('product-edit', ['slug' => $product->url_key]);
-        } 
+        }
     }
 
     function groupPrice(Request $request, $id)
