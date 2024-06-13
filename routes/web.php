@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/supplier-update/{id}', [SupplierController::class, 'update'])->name('supplier-update');
 
     // Purchase
-    Route::get('/purchase', [PurchaseController::class, 'index'])->name('purchase');
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases');
     Route::post('/purchase-store', [PurchaseController::class, 'store'])->name('purchase-store');
     // Sales invoice
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');

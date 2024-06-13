@@ -72,8 +72,10 @@ const ProductMode = (props) => {
         // setProducts(result.data)
     }, [])
 
+    
+
     return (
-        <div className="w-8/12 flex-grow flex">
+        <div className="w-6/12 flex-grow flex">
             <div className="flex flex-col bg-blue-gray-50 h-full w-full py-4">
                 <div className="flex px-2 flex-row relative">
                     <div className="absolute left-5 top-3 px-2 py-1 bg-cyan-500 text-white">
@@ -85,6 +87,8 @@ const ProductMode = (props) => {
                 </div>
                 <div className="h-full overflow-hidden mt-4">
                     <div className="h-full overflow-y-auto px-2">
+                        {/* invoice */}
+
                         {
                             items.length > 0 ?
                                 <table className="w-full">
@@ -131,11 +135,6 @@ const ProductMode = (props) => {
                 </div>
             </div>
         </div>
-        <div className="w-4/12 flex-grow flex">
-        <div className="bg-white rounded-3xl flex flex-col h-6">
-         
-        </div>
-      </div >
     )
 }
 

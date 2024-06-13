@@ -45,6 +45,12 @@ const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
                         <span className="ml-2">Supplier</span>
                     </Link>
                 </li>
+                <h6 className="px-7 front-bold">Purchase</h6>
+                <li>
+                    <Link href={route('purchases')} className="sub_link_name squared">
+                        <span className="ml-2">Purchases</span>
+                    </Link>
+                </li>
             </ul>
         </div>
     )
