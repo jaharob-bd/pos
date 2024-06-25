@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Purchase;
 
 use App\Http\Controllers\Controller;
+use App\Models\Catalog\Product;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,13 +18,16 @@ use App\Models\Purchase\PurchaseChd;
 use App\Models\Purchase\StockMst;
 use App\Models\Purchase\StockChd;
 use App\Models\Purchase\PurPayDetail;
+use App\Models\Supplier\Supplier;
 use Carbon\Carbon;
 
 class PurchaseController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Purchase/Index');
+        $data['products'] = Product::all();
+        $data['suppliers'] = Supplier::all();
+        return Inertia::render('Purchase/Index', $data);
     }
 
     public function store(Request $request)

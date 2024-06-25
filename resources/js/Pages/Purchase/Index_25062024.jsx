@@ -1,31 +1,9 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import Select from 'react-select';
 
-const Index = (props) => {
-    const auth = props.auth;
-    const [products, setProducts] = useState(props.products);
-    const [suppliers, setSuppliers] = useState(props.suppliers);
+const Index = ({ auth }) => {
     const [search, setSearch] = useState('');
-    const options = products.map((product) => ({
-        value: product.id,
-        label: product.name,
-    }));
-    // supplier options
-    const supplierOptions = suppliers.map((supplier) => ({
-        value: supplier.id,
-        label: supplier.name,
-    }));
-    // supplier options
-    const handleChangeSupplier = (selectedOption) => {
-        setSearch(selectedOption ? selectedOption.value : '');
-    }
-
-    const handleChange = (selectedOption) => {
-        setSearch(selectedOption ? selectedOption.value : '');
-    };
-
     const items = [
         // Example items
         { id: 1, name: 'Item 1', price: 100 },
@@ -46,15 +24,19 @@ const Index = (props) => {
         <AuthenticatedLayout user={auth.user} header={''}>
             <div className="flex flex-col md:flex-row w-full h-full">
                 {/* Section 1 */}
-                <div className="w-full md:w-7/12 flex-grow flex">
+                <div className="w-full md:w-8/12 flex-grow flex">
                     <div className="flex flex-col bg-blue-gray-50 h-full w-full py-4">
                         <div className="flex px-2 flex-row relative">
-                            <Select
-                                options={options}
-                                onChange={handleChange}
-                                classNamePrefix="react-select"
-                                className="bg-white shadow text-lg w-full h-10 transition-shadow focus:shadow-2xl focus:outline-none"
-                                placeholder="Select or Type Name ..."
+                            <div className="absolute left-5 top-3 px-2 py-1 bg-cyan-500 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <input
+                                onChange={(e) => setSearch(e.target.value)}
+                                type="text"
+                                className="bg-white shadow text-lg w-full h-10 py-2 pl-16 transition-shadow focus:shadow-2xl focus:outline-none"
+                                placeholder="Scan Item Code or Name ..."
                             />
                         </div>
                         <div className="h-full overflow-hidden mt-4">
@@ -62,7 +44,7 @@ const Index = (props) => {
                                 {items.length > 0 ? (
                                     <table className="w-full">
                                         <thead>
-                                            <tr className="bg-indigo-500 h-6 border border-indigo-500 text-white">
+                                            <tr className="bg-indigo-500 h-10 border border-indigo-500 text-white">
                                                 <th className="border-l border-r border-b border-indigo-500">Sl. No</th>
                                                 <th className="border-l border-r border-b border-indigo-500">Product Name</th>
                                                 <th className="border-l border-r border-b border-indigo-500">Unit Price</th>
@@ -72,7 +54,7 @@ const Index = (props) => {
                                         </thead>
                                         <tbody>
                                             {items.map((item, i) => (
-                                                <tr key={item.id} className="font-bold h-4">
+                                                <tr key={item.id} className="font-bold">
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{item.name}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{item.price}</td>
@@ -99,7 +81,7 @@ const Index = (props) => {
                     </div>
                 </div>
                 {/* Section 2 */}
-                <div className="w-full md:w-5/12 flex-grow flex px-3">
+                <div className="w-full md:w-4/12 flex-grow flex px-3">
                     <div className="bg-white rounded-3xl flex flex-col w-full">
                         {cartItems.length > 0 ? (
                             <div>
@@ -126,38 +108,6 @@ const Index = (props) => {
                                 </div>
                             </div>
                         )}
-                        {/* general information */}
-                        <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-                            <div>
-                                <input
-                                    name="name"
-                                    type="text"
-                                    className="block w-full px-3 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-50 dark:border-gray-50 focus:border-blue-50 dark:focus:border-blue-50 focus:outline-none focus:ring"
-                                    onChange={handleChange}
-                                    placeholder="Batch No"
-                                />
-                            </div>
-                            <div>
-                                <select
-                                    name="name"
-                                    type="text"
-                                    className="block w-full px-3 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">-- Select Store --</option>
-                                </select>
-                            </div>
-                            <div className="sm:col-span-2 pb-2">
-                                <Select
-                                    options={supplierOptions}
-                                    onChange={handleChange}
-                                    classNamePrefix="react-select"
-                                    placeholder="Select Supplier"
-                                    className="block w-full mt-1 text-gray-900 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
-                                />
-
-                            </div>
-                        </div>
                         <table className="w-full totalCalculation">
                             <thead>
                                 <tr className="bg-slate-600 h-10 border border-indigo-500 text-white">
@@ -182,18 +132,35 @@ const Index = (props) => {
                                 </tr>
                             </thead>
                         </table>
-                        <table className="w-full totalCalculation pl-2">
+                        <br />
+                        <table className="w-full totalCalculation">
                             <thead>
                                 <tr>
-                                    <th className="border border-slate-500 text-left w-2/5">Cash Received</th>
+                                    <th className="border border-slate-500 text-left w-2/5">Bank Receive</th>
                                     <th className="border border-slate-500 text-right">10000</th>
                                 </tr>
                                 <tr>
-                                    <th className="border border-slate-500 text-left w-2/5">Online Banking</th>
+                                    <th className="border border-slate-500 text-left w-2/5">e Com Cash</th>
                                     <th className="border border-slate-500 text-right"></th>
                                 </tr>
                                 <tr>
-                                    <th className="border border-slate-500 text-left w-2/5">VISA/Master Card</th>
+                                    <th className="border border-slate-500 text-left w-2/5">Cell fin</th>
+                                    <th className="border border-slate-500 text-right"></th>
+                                </tr>
+                                <tr>
+                                    <th className="border border-slate-500 text-left w-2/5">Nagad</th>
+                                    <th className="border border-slate-500 text-right"></th>
+                                </tr>
+                                <tr>
+                                    <th className="border border-slate-500 text-left w-2/5">Upay</th>
+                                    <th className="border border-slate-500 text-right"></th>
+                                </tr>
+                                <tr>
+                                    <th className="border border-slate-500 text-left w-2/5">Payable Amount</th>
+                                    <th className="border border-slate-500 text-right bg-indigo-500 text-white">65</th>
+                                </tr>
+                                <tr>
+                                    <th className="border border-slate-500 text-left w-2/5">Cash Receive</th>
                                     <th className="border border-slate-500 text-right"></th>
                                 </tr>
                                 <tr>
