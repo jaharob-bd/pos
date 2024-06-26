@@ -86,7 +86,7 @@ const Index = (props) => {
                             />
                         </div>
 
-                        {popoverVisible && (
+                        {popoverVisible && popoverData.variant.length > 0 && (
                             <div
                                 id="popover-content"
                                 role="tooltip"
