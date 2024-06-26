@@ -25,7 +25,8 @@ class PurchaseController extends Controller
 {
     public function index()
     {
-        $data['products'] = Product::all();
+        $data['products'] = Product::with('variantPrices')->get();
+        // return $data['products'];
         $data['suppliers'] = Supplier::all();
         return Inertia::render('Purchase/Index', $data);
     }

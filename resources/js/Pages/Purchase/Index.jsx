@@ -11,11 +11,13 @@ const Index = (props) => {
     const options = products.map((product) => ({
         value: product.id,
         label: product.name,
+        variant: product.variant_prices
     }));
+
     // supplier options
     const supplierOptions = suppliers.map((supplier) => ({
         value: supplier.id,
-        label: supplier.name,
+        label: supplier.name
     }));
     // supplier options
     const handleChangeSupplier = (selectedOption) => {
@@ -41,7 +43,32 @@ const Index = (props) => {
     const submit = () => {
         // Submit function logic
     };
+    const [popoverVisible, setPopoverVisible] = useState(false);
+    const [popoverData, setPopoverData] = useState(null);
+    const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
 
+    const handleMouseEnter = (event, data) => {
+        const rect = event.target.getBoundingClientRect();
+        setPopoverPosition({ top: rect.top, left: rect.right });
+        setPopoverData(data);
+        setPopoverVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        setPopoverVisible(false);
+    };
+
+    const CustomOption = (props) => (
+        <div
+            onMouseEnter={(e) => handleMouseEnter(e, props.data)}
+            onMouseLeave={handleMouseLeave}
+            {...props.innerProps}
+            className="p-2 cursor-pointer hover:bg-gray-100"
+        >
+            {props.data.label}
+        </div>
+    );
+    // ----- end variant propups -----
     return (
         <AuthenticatedLayout user={auth.user} header={''}>
             <div className="flex flex-col md:flex-row w-full h-full">
@@ -51,12 +78,58 @@ const Index = (props) => {
                         <div className="flex px-2 flex-row relative">
                             <Select
                                 options={options}
-                                onChange={handleChange}
+                                onChange={(option) => console.log(option)}
                                 classNamePrefix="react-select"
                                 className="bg-white shadow text-lg w-full h-10 transition-shadow focus:shadow-2xl focus:outline-none"
                                 placeholder="Select or Type Name ..."
+                                components={{ Option: CustomOption }}
                             />
                         </div>
+
+                        {popoverVisible && (
+                            <div
+                                id="popover-content"
+                                role="tooltip"
+                                className="absolute z-20 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm w-70 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600"
+                                style={{ top: popoverPosition.top, left: popoverPosition.left }}
+                            >
+                                <div className="p-3">
+                                    <div className="flex">
+                                        <div>
+                                            <p className="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white">
+                                                <a href="#" className="hover:underline">{popoverData.value + ' . ' + popoverData.label}</a>
+                                            </p>
+                                            <table className="w-full">
+                                                <thead>
+                                                    <tr className="bg-indigo-500 h-6 border border-indigo-500 text-white">
+                                                        <th className="border-l border-r border-b border-indigo-500">Sl. No</th>
+                                                        <th className="border-l border-r border-b border-indigo-500">Variant</th>
+                                                        <th className="border-l border-r border-b border-indigo-500">Buy Price</th>
+                                                        <th className="border-l border-r border-b border-indigo-500">Sale Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        popoverData.variant.map((variant, i) => (
+                                                            <tr key={variant.id} className="font-bold h-4">
+                                                                <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
+                                                                <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.variant_name}</td>
+                                                                <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{variant.buy_price}</td>
+                                                                <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.sale_price}</td>
+                                                            </tr>
+                                                        ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-popper-arrow />
+                            </div>
+                        )}
+
+
+
+
                         <div className="h-full overflow-hidden mt-4">
                             <div className="h-full overflow-y-auto px-2">
                                 {items.length > 0 ? (
