@@ -1,6 +1,7 @@
-import './bootstrap';
+// import './bootstrap';
 import '../css/app.css';
 import '../css/style.css';
+import '../css/custom.css';
 import 'remixicon/fonts/remixicon.css'
 import './Helpers/i18n'
 

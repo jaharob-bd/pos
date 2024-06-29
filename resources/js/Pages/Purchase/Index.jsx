@@ -5,6 +5,18 @@ import Select from 'react-select';
 
 const Index = (props) => {
     const auth = props.auth;
+    const inital = {
+        variant_id: '',
+        variant_name: '',
+        product_id: '',
+        product_name: '',
+        supplier_id: '',
+        variant_price: 0,
+        quantity: 1,
+        total_price: 0,
+    }
+    const [data, setData] = useState(inital);
+    // console.log(data);
     const [products, setProducts] = useState(props.products);
     const [suppliers, setSuppliers] = useState(props.suppliers);
     const [search, setSearch] = useState('');
@@ -23,11 +35,6 @@ const Index = (props) => {
     const handleChangeSupplier = (selectedOption) => {
         setSearch(selectedOption ? selectedOption.value : '');
     }
-
-    const handleChange = (selectedOption) => {
-        setSearch(selectedOption ? selectedOption.value : '');
-    };
-
     const items = [
         // Example items
         { id: 1, name: 'Item 1', price: 100 },
@@ -49,7 +56,7 @@ const Index = (props) => {
 
     const handleMouseEnter = (event, data) => {
         const rect = event.target.getBoundingClientRect();
-        setPopoverPosition({ top: rect.top, left: rect.right });
+        setPopoverPosition({ top: rect.top, left: 300 });
         setPopoverData(data);
         setPopoverVisible(true);
     };
@@ -62,12 +69,36 @@ const Index = (props) => {
         <div
             onMouseEnter={(e) => handleMouseEnter(e, props.data)}
             onMouseLeave={handleMouseLeave}
+            onChange={(e) => handleChange(e, props.data)}
             {...props.innerProps}
             className="p-2 cursor-pointer hover:bg-gray-100"
         >
-            {props.data.label}
+            {props.data.label + ' [' + props.data.variant.length + '] '}
+            [
+            {props.data.variant.length === 1
+                ? props.data.variant[0].variant_name
+                : props.data.variant.map(variant => variant.variant_name).join(', ')
+            }
+            ]
         </div>
     );
+
+    const handleChange = (item) => {
+        // set data state 
+        let variantData = item.variant[0];
+        setData({
+            ...data,
+            variant_id: variantData.id,
+            variant_name: variantData.name,
+            product_id: item.value,
+            product_name: item.label,
+            supplier_id: 1,
+            variant_price: variantData.buy_price,
+            quantity: variantData.quantity,
+            total_price: 100000
+        });
+        console.log(data);
+    };
     // ----- end variant propups -----
     return (
         <AuthenticatedLayout user={auth.user} header={''}>
@@ -78,7 +109,8 @@ const Index = (props) => {
                         <div className="flex px-2 flex-row relative">
                             <Select
                                 options={options}
-                                onChange={(option) => console.log(option)}
+                                // onChange={(option) => console.log(option)}
+                                onChange={handleChange}
                                 classNamePrefix="react-select"
                                 className="bg-white shadow text-lg w-full h-10 transition-shadow focus:shadow-2xl focus:outline-none"
                                 placeholder="Select or Type Name ..."
@@ -86,22 +118,29 @@ const Index = (props) => {
                             />
                         </div>
 
-                        {popoverVisible && popoverData.variant.length > 0 && (
+                        {popoverVisible && popoverData.variant.length > 1 && (
                             <div
                                 id="popover-content"
                                 role="tooltip"
-                                className="absolute z-20 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm w-70 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600"
+                                className="absolute z-50 text-sm text-gray-500 bg-white border border-indigo-600 rounded-lg shadow-sm w-70 dark:text-gray-400 dark:bg-gray-800 dark:border-indigo-600"
                                 style={{ top: popoverPosition.top, left: popoverPosition.left }}
                             >
                                 <div className="p-3">
                                     <div className="flex">
                                         <div>
                                             <p className="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white">
-                                                <a href="#" className="hover:underline">{popoverData.value + ' . ' + popoverData.label}</a>
+                                                <a href="#" className="hover:underline">
+                                                    {popoverData.value + ' . ' + popoverData.label}
+                                                </a>
+                                                <button className="close"
+                                                    onClick={handleMouseLeave}
+                                                    aria-label="Close">X</button>
+
                                             </p>
                                             <table className="w-full">
                                                 <thead>
                                                     <tr className="bg-indigo-500 h-6 border border-indigo-500 text-white">
+                                                        <th></th>
                                                         <th className="border-l border-r border-b border-indigo-500">Sl. No</th>
                                                         <th className="border-l border-r border-b border-indigo-500">Variant</th>
                                                         <th className="border-l border-r border-b border-indigo-500">Buy Price</th>
@@ -110,14 +149,31 @@ const Index = (props) => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        popoverData.variant.map((variant, i) => (
-                                                            <tr key={variant.id} className="font-bold h-4">
-                                                                <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
-                                                                <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.variant_name}</td>
-                                                                <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{variant.buy_price}</td>
-                                                                <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.sale_price}</td>
-                                                            </tr>
-                                                        ))}
+                                                        popoverData.variant.map((variant, i) => {
+                                                            const productData = {
+                                                                value: popoverData.value,
+                                                                label: popoverData.label,
+                                                                variant: [variant]
+                                                            };
+
+                                                            return (
+                                                                <tr key={variant.id} className="font-bold h-4">
+                                                                    <td
+                                                                        className="border-l border-r border-b border-indigo-500"
+                                                                    >
+                                                                        <input
+                                                                            type="checkbox"
+                                                                            onChange={(e) => handleChange(productData)}
+                                                                        />
+                                                                    </td>
+                                                                    <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
+                                                                    <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.variant_name}</td>
+                                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{variant.buy_price}</td>
+                                                                    <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.sale_price}</td>
+                                                                </tr>
+                                                            );
+                                                        })
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -140,6 +196,7 @@ const Index = (props) => {
                                                 <th className="border-l border-r border-b border-indigo-500">Product Name</th>
                                                 <th className="border-l border-r border-b border-indigo-500">Unit Price</th>
                                                 <th className="border-l border-r border-b border-indigo-500">Quantity</th>
+                                                <th className="border-l border-r border-b border-indigo-500">Total Price</th>
                                                 <th className="p-2"></th>
                                             </tr>
                                         </thead>
@@ -150,6 +207,7 @@ const Index = (props) => {
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{item.name}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{item.price}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">1</td>
+                                                    <td className="pl-1 border-l border-r border-b border-indigo-500"></td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500"></td>
                                                 </tr>
                                             ))}

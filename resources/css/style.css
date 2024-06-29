@@ -243,3 +243,24 @@
   font-variant: normal;
   text-transform: none;
 }
+
+.close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.7em;
+}
+
+.close:hover {
+  background: darkred;
+}

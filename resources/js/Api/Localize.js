@@ -14,6 +14,7 @@ export const resources = {
             "catalog": "Catalog",
             "consumer": "Consumer",
             "supplier": "Supplier",
+            "Purchase": "Purchase",
         }
     },
     "ar": {
@@ -31,6 +32,7 @@ export const resources = {
             "catalog": "تسجيل",
             "consumer": "تسجيل",
             "supplier": "تسجيل",
+            "Purchase": "Purchase",
         }
     },
     "ms": {
