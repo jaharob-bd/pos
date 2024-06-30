@@ -2,21 +2,24 @@ import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import Select from 'react-select';
+import SwalAlert from '@/Components/Alert/SwalAlert';
 
 const Index = (props) => {
     const auth = props.auth;
-    const inital = {
-        variant_id: '',
-        variant_name: '',
-        product_id: '',
-        product_name: '',
-        supplier_id: '',
-        variant_price: 0,
-        quantity: 1,
-        total_price: 0,
-    }
-    const [data, setData] = useState(inital);
-    // console.log(data);
+    const initial = [
+        {
+            supplier_id: '',
+            vat: '',
+            discount: '',
+            sub_total: '',
+            grand_total: '',
+            items: [
+                // { variant_id: '', variant_name: '', product_id: '', product_name: '', variant_price: '', quantity: '', total_price: '' },
+            ]
+        }
+    ];
+    const [data, setData] = useState(initial);
+    // console.log(data[0].items);
     const [products, setProducts] = useState(props.products);
     const [suppliers, setSuppliers] = useState(props.suppliers);
     const [search, setSearch] = useState('');
@@ -84,20 +87,52 @@ const Index = (props) => {
     );
 
     const handleChange = (item) => {
-        // set data state 
         let variantData = item.variant[0];
-        setData({
-            ...data,
+        let updatedItem = {
             variant_id: variantData.id,
-            variant_name: variantData.name,
+            variant_name: variantData.variant_name,
             product_id: item.value,
             product_name: item.label,
-            supplier_id: 1,
             variant_price: variantData.buy_price,
-            quantity: variantData.quantity,
-            total_price: 100000
-        });
-        console.log(data);
+            quantity: 1,
+            total_price: variantData.buy_price
+        };
+        const discount = 20;
+        const vat = 10;
+        // Check if the item with the same variant_id already exists
+        const itemIndex = data[0].items.findIndex(i => i.variant_id === variantData.id);
+        // console.log(itemIndex); // Log the index to check
+
+        if (itemIndex === -1) {
+            // If no duplicate is found, update the state
+            setData((prevData) => {
+                let updatedData = [...prevData];
+
+                // Update the supplier details
+                updatedData[0].supplier_id = 'abdullah';
+                updatedData[0].discount = discount;
+                updatedData[0].vat = vat;
+
+                // Filter out initial empty items
+                updatedData[0].items = updatedData[0].items.filter(i => i.variant_id);
+
+                // Add the new item
+                updatedData[0].items = [...updatedData[0].items, updatedItem];
+                const subTotal = updatedData[0].items.reduce((a, b) => a + Number(b.total_price || 0), 0);
+                updatedData[0].sub_total = subTotal;
+                updatedData[0].grand_total = subTotal - discount + vat;
+                console.log('subtotal sum of total_price:', subTotal);
+
+                // setTotalSum(totalSum);
+                return updatedData;
+            });
+
+            console.log(data);
+            SwalAlert('success', item.label + ' ' + variantData.variant_name + ' is Added');
+        } else {
+            setPopoverVisible(false);
+            SwalAlert('warning', 'Duplicate variant_id found. No update performed.');
+        }
     };
     // ----- end variant propups -----
     return (
@@ -183,12 +218,9 @@ const Index = (props) => {
                             </div>
                         )}
 
-
-
-
                         <div className="h-full overflow-hidden mt-4">
                             <div className="h-full overflow-y-auto px-2">
-                                {items.length > 0 ? (
+                                {data[0].items.length > 0 ? (
                                     <table className="w-full">
                                         <thead>
                                             <tr className="bg-indigo-500 h-6 border border-indigo-500 text-white">
@@ -201,13 +233,13 @@ const Index = (props) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {items.map((item, i) => (
+                                            {data[0].items.map((item, i) => (
                                                 <tr key={item.id} className="font-bold h-4">
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
-                                                    <td className="pl-1 border-l border-r border-b border-indigo-500">{item.name}</td>
-                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{item.price}</td>
-                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">1</td>
-                                                    <td className="pl-1 border-l border-r border-b border-indigo-500"></td>
+                                                    <td className="pl-1 border-l border-r border-b border-indigo-500">{item.product_name + ' [' + item.variant_name + ']'}</td>
+                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{item.variant_price}</td>
+                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{ item.quantity}</td>
+                                                    <td className="pl-1 border-l border-r border-b border-indigo-500">{item.total_price}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500"></td>
                                                 </tr>
                                             ))}
@@ -232,7 +264,7 @@ const Index = (props) => {
                 {/* Section 2 */}
                 <div className="w-full md:w-5/12 flex-grow flex px-3">
                     <div className="bg-white rounded-3xl flex flex-col w-full">
-                        {cartItems.length > 0 ? (
+                        {data[0].items.length > 0 ? (
                             <div>
                                 <div className="flex-1 w-full opacity-25 select-none flex flex-col flex-wrap content-center justify-center">
                                     <div className="pl-8 text-left text-lg py-4 relative">
@@ -240,7 +272,7 @@ const Index = (props) => {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                         <div className="text-center absolute bg-cyan-500 text-white w-5 h-5 text-xs p-0 leading-5 rounded-full -right-2 top-3">
-                                            {cartItems.reduce((a, b) => a + (b['qty'] || 0), 0)}
+                                            {data[0].items.reduce((a, b) => a + (b['quantity'] || 0), 0)}
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +305,7 @@ const Index = (props) => {
                                     name="name"
                                     type="text"
                                     className="block w-full px-3 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
-                                    onChange={handleChange}
+                                    // onChange={handleChange}
                                 >
                                     <option value="">-- Select Store --</option>
                                 </select>
@@ -281,7 +313,7 @@ const Index = (props) => {
                             <div className="sm:col-span-2 pb-2">
                                 <Select
                                     options={supplierOptions}
-                                    onChange={handleChange}
+                                    // onChange={handleChange}
                                     classNamePrefix="react-select"
                                     placeholder="Select Supplier"
                                     className="block w-full mt-1 text-gray-900 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
@@ -292,24 +324,24 @@ const Index = (props) => {
                         <table className="w-full totalCalculation">
                             <thead>
                                 <tr className="bg-slate-600 h-10 border border-indigo-500 text-white">
-                                    <th className="text-left w-2/5">MRP Total</th>
+                                    <th className="text-left w-2/5">Sub Total</th>
                                     <th className="text-left">:</th>
-                                    <th className="text-right">1000</th>
-                                </tr>
-                                <tr className="bg-slate-600 h-10 border border-indigo-500 text-white">
-                                    <th className="text-left w-2/5">(+) VAT</th>
-                                    <th className="text-left">:</th>
-                                    <th className="text-right">10</th>
+                                    <th className="text-right"> {data[0].sub_total }</th>
                                 </tr>
                                 <tr className="bg-slate-600 h-10 border border-indigo-500 text-white">
                                     <th className="text-left w-2/5">(-) Discount</th>
                                     <th className="text-left">:</th>
-                                    <th className="text-right">15</th>
+                                    <th className="text-right">{data[0].discount }</th>
                                 </tr>
                                 <tr className="bg-slate-600 h-10 border border-indigo-500 text-white">
-                                    <th className="text-left w-2/5">Total</th>
+                                    <th className="text-left w-2/5">(+) VAT</th>
                                     <th className="text-left">:</th>
-                                    <th className="text-right">1025</th>
+                                    <th className="text-right">{data[0].vat }</th>
+                                </tr>
+                                <tr className="bg-slate-600 h-10 border border-indigo-500 text-white">
+                                    <th className="text-left w-2/5">Grand Total</th>
+                                    <th className="text-left">:</th>
+                                    <th className="text-right">{data[0].grand_total }</th>
                                 </tr>
                             </thead>
                         </table>

@@ -6,7 +6,6 @@ import { FormGroupPrice } from './FormGroupPrice';
 import { ListVariantPrice } from './ListVariantPrice';
 import { ListGroupPrice } from './ListGroupPrice';
 import SwalWarning from '@/Components/Alert/SwalWarning';
-import Swal from 'sweetalert2';
 
 const EditPrice = (props) => {
     const initV = { variant_name: "", buy_price: "", sale_price: "", mrp_price: "" }
