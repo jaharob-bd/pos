@@ -71,12 +71,13 @@ const Index = (props) => {
             ]
         </div>
     );
+
     const handleCartItem = (item) => {
         if (item.variant.length !== 1) {
             SwalAlert('warning', 'Please select product variant.');
             return;
         }
-
+    
         const variantData = item.variant[0];
         const updatedItem = {
             variant_id: variantData.id,
@@ -87,42 +88,93 @@ const Index = (props) => {
             quantity: 1,
             total_price: variantData.buy_price
         };
-
+    
         const discount = data[0].discount || 0;
         const vat = data[0].vat || 0;
         const itemIndex = data[0].items.findIndex(i => i.variant_id === variantData.id);
-
+    
         if (itemIndex !== -1) {
             setPopoverVisible(false);
             SwalAlert('warning', 'Duplicate variant_id found. No update performed.');
             return;
         }
-
+    
         setData((prevData) => {
             const updatedData = [...prevData];
             updatedData[0].items = updatedData[0].items.filter(i => i.variant_id);
             updatedData[0].items.push(updatedItem);
-
+    
             const subTotal = calculateSubTotal(updatedData[0].items);
             updatedData[0].sub_total = subTotal;
             updatedData[0].grand_total = calculateGrandTotal(subTotal, discount, vat);
-
+    
             return updatedData;
         });
-
+    
         console.log(data);
         SwalAlert('success', `${item.label} ${variantData.variant_name} is Added`);
+    };
+    
+    const handleCartItem_old = (item) => {
+        let variantData = item.variant[0];
+        let updatedItem = {
+            variant_id: variantData.id,
+            variant_name: variantData.variant_name,
+            product_id: item.value,
+            product_name: item.label,
+            variant_price: variantData.buy_price,
+            quantity: 1,
+            total_price: variantData.buy_price
+        };
+        const discount = data[0].discount ? data[0].discount : 0;
+        const vat = data[0].vat ? data[0].vat : 0;
+        // Check if the item with the same variant_id already exists
+        const itemIndex = data[0].items.findIndex(i => i.variant_id === variantData.id);
+        // console.log(itemIndex); // Log the index to check
+        if (item.variant.length === 1) {
+            if (itemIndex === -1) {
+                // If no duplicate is found, update the state
+                setData((prevData) => {
+                    let updatedData = [...prevData];
+
+                    // Update the supplier details
+                    // updatedData[0].supplier_id = 'abdullah';
+                    // updatedData[0].discount = discount;
+                    // updatedData[0].vat = vat;
+
+                    // Filter out initial empty items
+                    updatedData[0].items = updatedData[0].items.filter(i => i.variant_id);
+
+                    // Add the new item
+                    updatedData[0].items = [...updatedData[0].items, updatedItem];
+                    const subTotal = updatedData[0].items.reduce((a, b) => a + Number(b.total_price || 0), 0);
+                    updatedData[0].sub_total = subTotal;
+                    updatedData[0].grand_total = parseInt(subTotal) - parseInt(discount) + parseInt(vat);
+
+
+                    // setTotalSum(totalSum);
+                    return updatedData;
+                });
+
+                console.log(data);
+                SwalAlert('success', item.label + ' ' + variantData.variant_name + ' is Added');
+            } else {
+                setPopoverVisible(false);
+                SwalAlert('warning', 'Duplicate variant_id found. No update performed.');
+            }
+        } else {
+            SwalAlert('warning', 'Please select product variant.');
+        }
     };
     // ----- end variant propups -----
     // general state change batch_no, supplier_id, store_id -----
     const calculateSubTotal = (items) => {
         return items.reduce((a, b) => a + Number(b.total_price || 0), 0);
     };
-
+    
     const calculateGrandTotal = (subTotal, discount, vat) => {
         return parseInt(subTotal) - parseInt(discount) + parseInt(vat);
     };
-
     const calculateDiscount = (sub_total, discount, discount_type) => {
         if (discount_type === 2) {
             return discount || 0;
@@ -130,11 +182,11 @@ const Index = (props) => {
         return discount ? (sub_total * discount) / 100 : 0;
     };
 
-    const calculateVAT = (sub_total, discount, vat, vat_type) => {
+    const calculateVAT = (sub_total, vat, vat_type) => {
         if (vat_type === 2) {
             return vat || 0;
         }
-        return vat ? ((sub_total - discount) * vat) / 100 : 0;
+        return vat ? (sub_total * vat) / 100 : 0;
     };
 
     const resetDiscountOrVat = (item, type, value) => {
@@ -151,12 +203,40 @@ const Index = (props) => {
 
             const sub_total = item.sub_total || 0;
             const discount = calculateDiscount(sub_total, item.discount, item.discount_type);
-            const vat = calculateVAT(sub_total, discount, item.vat, item.vat_type);
+            const vat = calculateVAT(sub_total, item.vat, item.vat_type);
 
-            // item.grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
-            item.grand_total = calculateGrandTotal(sub_total, discount, vat);
+            item.grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
             updatedData[0] = item;
 
+            return updatedData;
+        });
+    };
+
+
+
+    const handleChange_old = (e) => {
+        setData((prevData) => {
+            let updatedData = [...prevData];
+            updatedData[0][e.target.name] = e.target.value;
+            // grand total update
+            let sub_total = updatedData[0].sub_total ? updatedData[0].sub_total : 0;
+            // discount & vat calculation
+            // if discount type 1 then calculate discount percentage based and if discount type 2 then calculate discount amount based on else discount 0
+            let discount = 0;
+            let vat = 0;
+            if (updatedData[0].discount_type === 2) {
+                discount = updatedData[0].discount ? updatedData[0].discount : 0;
+            } else {
+                discount = updatedData[0].discount ? (sub_total * updatedData[0].discount) / 100 : 0;
+            }
+            // if vat type 1 then calculate vat percentage based and if vat type 2 then calculate vat amount based on else vat 0
+            if (updatedData[0].vat_type === 2) {
+                vat = updatedData[0].vat ? updatedData[0].vat : 0;
+            } else {
+                vat = updatedData[0].vat ? (sub_total * updatedData[0].vat) / 100 : 0;
+            }
+
+            updatedData[0].grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
             return updatedData;
         });
     };
@@ -173,7 +253,7 @@ const Index = (props) => {
 
             const sub_total = item.sub_total || 0;
             const discount = calculateDiscount(sub_total, item.discount, item.discount_type);
-            const vat = calculateVAT(sub_total, discount, item.vat, item.vat_type);
+            const vat = calculateVAT(sub_total, item.vat, item.vat_type);
 
             item.grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
             updatedData[0] = item;
@@ -182,6 +262,22 @@ const Index = (props) => {
         });
     };
 
+    const handleDiscountVatTypeChange_old = (e) => {
+        const isChecked = e.target.checked;
+        setData((prevData) => {
+            let updatedData = [...prevData];
+            updatedData[0][e.target.name] = isChecked ? 1 : 2;
+            updatedData[0].discount = (e.target.name == 'discount_type') ? '' : updatedData[0].discount;
+            updatedData[0].vat = (e.target.name == 'vat_type') ? '' : updatedData[0].vat;
+
+            // grand total update
+            let sub_total = updatedData[0].sub_total ? updatedData[0].sub_total : 0;
+            let discount = updatedData[0].discount ? updatedData[0].discount : 0;
+            let vat = updatedData[0].vat ? updatedData[0].vat : 0;
+            updatedData[0].grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
+            return updatedData;
+        });
+    };
     const submit = () => {
         // Submit function logic
     };
