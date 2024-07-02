@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import Select from 'react-select';
@@ -38,9 +38,20 @@ const Index = (props) => {
         value: supplier.id,
         label: supplier.name
     }));
+    // Log data whenever it updates
+    useEffect(() => {
+        // console.log(data);
+    }, [data]);
     // supplier options
     const handleCartItemSupplier = (selectedOption) => {
-        setSearch(selectedOption ? selectedOption.value : '');
+        console.log(selectedOption);
+        setData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData[0].supplier_id = selectedOption ? selectedOption.value : '';
+            return updatedData;
+        });
+        console.log(data)
+        // setSearch(selectedOption ? selectedOption.value : '');
     }
 
     const handleMouseEnter = (event, data) => {
@@ -142,18 +153,41 @@ const Index = (props) => {
         if (type === 'vat_type') item.vat = value;
     };
 
+    const handleQuantity = (e, variant_id) => {
+        const { value } = e.target;
+        const variant = variant_id;
+        // update quantity where variant_id
+        setData((prevData) => {
+            const updatedData = [...prevData];
+            updatedData[0].items = updatedData[0].items.map((item) =>
+                item.variant_id === variant ? { ...item, quantity: value, total_price: (parseInt(item.variant_price) * value) } : item
+            );
+
+            const sub_total = calculateSubTotal(updatedData[0].items);
+            updatedData[0].sub_total = sub_total;
+            const discount = calculateDiscount(sub_total, updatedData[0].discount, updatedData[0].discount_type);
+            const vat = calculateVAT(sub_total, discount, updatedData[0].vat, updatedData[0].vat_type);
+            updatedData[0].grand_total = calculateGrandTotal(sub_total, discount, vat);
+
+            return updatedData;
+        });
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         setData((prevData) => {
             const updatedData = [...prevData];
-            const item = { ...updatedData[0], [name]: value };
+            if (name === 'quantity') {
+                const item = { ...updatedData[0].items, [name]: value };
+            } else {
+                const item = { ...updatedData[0], [name]: value };
+            }
+            console.log(item);
 
             const sub_total = item.sub_total || 0;
             const discount = calculateDiscount(sub_total, item.discount, item.discount_type);
             const vat = calculateVAT(sub_total, discount, item.vat, item.vat_type);
-
-            // item.grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
             item.grand_total = calculateGrandTotal(sub_total, discount, vat);
             updatedData[0] = item;
 
@@ -288,7 +322,15 @@ const Index = (props) => {
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{item.product_name + ' [' + item.variant_name + ']'}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{item.variant_price}</td>
-                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-center">{item.quantity}</td>
+                                                    <td className="w-11 border-l border-r border-b border-indigo-500 text-center">
+                                                        <input
+                                                            type="text"
+                                                            name="quantity"
+                                                            className="w-full h-6 border-none text-center"
+                                                            value={item.quantity}
+                                                            onChange={(e) => handleQuantity(e, item.variant_id)}
+                                                        />
+                                                    </td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{item.total_price}</td>
                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">x</td>
                                                 </tr>
@@ -365,7 +407,7 @@ const Index = (props) => {
                                     name="supplier_id"
                                     type="text"
                                     options={supplierOptions}
-                                    onChange={handleChange}
+                                    onChange={handleCartItemSupplier}
                                     classNamePrefix="react-select"
                                     placeholder="Select Supplier"
                                     className="block w-full mt-1 text-gray-900 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
