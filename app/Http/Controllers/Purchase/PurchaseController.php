@@ -33,6 +33,7 @@ class PurchaseController extends Controller
 
     public function store(Request $request)
     {
+        dd(request()->all());
         // db transaction
         try {
             // Start transaction

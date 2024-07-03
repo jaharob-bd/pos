@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import Select from 'react-select';
 import SwalAlert from '@/Components/Alert/SwalAlert';
 
@@ -8,7 +9,7 @@ const Index = (props) => {
     const auth = props.auth;
     const initial = [
         {
-            batch_no: '',
+            batch_no: '1',
             store_id: '',
             supplier_id: '',
             discount_type: 2, // 1 = percentage 2 = amount
@@ -17,6 +18,11 @@ const Index = (props) => {
             vat: '',
             sub_total: '',
             grand_total: '',
+            cash_in_hand: '',
+            online_banking: '',
+            card_in_bank: '',
+            change_amount: '',
+            due_amount: '',
             items: [
                 // { variant_id: '', variant_name: '', product_id: '', product_name: '', variant_price: '', quantity: '', total_price: '' },
             ]
@@ -116,7 +122,13 @@ const Index = (props) => {
 
             const subTotal = calculateSubTotal(updatedData[0].items);
             updatedData[0].sub_total = subTotal;
-            updatedData[0].grand_total = calculateGrandTotal(subTotal, discount, vat);
+            const grandTotal = calculateGrandTotal(subTotal, discount, vat);
+            const cashInHand = updatedData[0].cash_in_hand || 0;
+            const onlineBanking = updatedData[0].online_banking || 0;
+            const cardInBank = updatedData[0].card_in_bank || 0;
+            updatedData[0].grand_total = grandTotal;
+            updatedData[0].change_amount = calculateChangeAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
+            updatedData[0].due_amount = calculateDueAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
 
             return updatedData;
         });
@@ -147,6 +159,18 @@ const Index = (props) => {
         }
         return vat ? ((sub_total - discount) * vat) / 100 : 0;
     };
+    // calculateDueAmount for
+    const calculateDueAmount = (grandTotal, cashInHand, onlineBanking, cardInBank) => {
+        let dueAmount = (grandTotal - cashInHand - onlineBanking - cardInBank);
+        if (dueAmount < 0) return 0;
+        return dueAmount;
+    };
+    // calculateChangeAmount
+    const calculateChangeAmount = (grandTotal, cashInHand, onlineBanking, cardInBank) =>{
+       const changeAmount =  parseInt(cashInHand) + parseInt(onlineBanking) + parseInt(cardInBank) - parseInt(grandTotal);
+       if (changeAmount < 0) return 0;
+       return changeAmount;
+    }
 
     const resetDiscountOrVat = (item, type, value) => {
         if (type === 'discount_type') item.discount = value;
@@ -163,11 +187,17 @@ const Index = (props) => {
                 item.variant_id === variant ? { ...item, quantity: value, total_price: (parseInt(item.variant_price) * value) } : item
             );
 
-            const sub_total = calculateSubTotal(updatedData[0].items);
-            updatedData[0].sub_total = sub_total;
-            const discount = calculateDiscount(sub_total, updatedData[0].discount, updatedData[0].discount_type);
-            const vat = calculateVAT(sub_total, discount, updatedData[0].vat, updatedData[0].vat_type);
-            updatedData[0].grand_total = calculateGrandTotal(sub_total, discount, vat);
+            const subTotal = calculateSubTotal(updatedData[0].items);
+            updatedData[0].sub_total = subTotal;
+            const discount = calculateDiscount(subTotal, updatedData[0].discount, updatedData[0].discount_type);
+            const vat = calculateVAT(subTotal, discount, updatedData[0].vat, updatedData[0].vat_type);
+            const grandTotal = calculateGrandTotal(subTotal, discount, vat);
+            const cashInHand = updatedData[0].cash_in_hand || 0;
+            const onlineBanking = updatedData[0].online_banking || 0;
+            const cardInBank = updatedData[0].card_in_bank || 0;
+            updatedData[0].grand_total = grandTotal;
+            updatedData[0].change_amount = calculateChangeAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
+            updatedData[0].due_amount = calculateDueAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
 
             return updatedData;
         });
@@ -178,21 +208,23 @@ const Index = (props) => {
 
         setData((prevData) => {
             const updatedData = [...prevData];
-            if (name === 'quantity') {
-                const item = { ...updatedData[0].items, [name]: value };
-            } else {
-                const item = { ...updatedData[0], [name]: value };
-            }
-            console.log(item);
+            const item = { ...updatedData[0], [name]: value };
 
-            const sub_total = item.sub_total || 0;
-            const discount = calculateDiscount(sub_total, item.discount, item.discount_type);
-            const vat = calculateVAT(sub_total, discount, item.vat, item.vat_type);
-            item.grand_total = calculateGrandTotal(sub_total, discount, vat);
+            const subTotal = item.sub_total || 0;
+            const discount = calculateDiscount(subTotal, item.discount, item.discount_type);
+            const vat = calculateVAT(subTotal, discount, item.vat, item.vat_type);
+            const grandTotal = calculateGrandTotal(subTotal, discount, vat);
+            const cashInHand = item.cash_in_hand || 0;
+            const onlineBanking = item.online_banking || 0;
+            const cardInBank = item.card_in_bank || 0;
+            item.grand_total = grandTotal;
+            item.change_amount = calculateChangeAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
+            item.due_amount = calculateDueAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
             updatedData[0] = item;
 
             return updatedData;
         });
+        console.log(data)
     };
 
     const handleDiscountVatTypeChange = (e) => {
@@ -205,11 +237,16 @@ const Index = (props) => {
 
             resetDiscountOrVat(item, name, '');
 
-            const sub_total = item.sub_total || 0;
-            const discount = calculateDiscount(sub_total, item.discount, item.discount_type);
-            const vat = calculateVAT(sub_total, discount, item.vat, item.vat_type);
-
-            item.grand_total = parseInt(sub_total) - parseInt(discount) + parseInt(vat);
+            const subTotal = item.sub_total || 0;
+            const discount = calculateDiscount(subTotal, item.discount, item.discount_type);
+            const vat = calculateVAT(subTotal, discount, item.vat, item.vat_type);
+            const grandTotal = calculateGrandTotal(subTotal, discount, vat);
+            const cashInHand = item.cash_in_hand || 0;
+            const onlineBanking = item.online_banking || 0;
+            const cardInBank = item.card_in_bank || 0;
+            item.grand_total = grandTotal;
+            item.change_amount = calculateChangeAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
+            item.due_amount = calculateDueAmount(grandTotal, cashInHand, onlineBanking, cardInBank);
             updatedData[0] = item;
 
             return updatedData;
@@ -217,7 +254,30 @@ const Index = (props) => {
     };
 
     const submit = () => {
-        // Submit function logic
+
+        try {
+            router.post('/purchase-store', data, {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setData(initial);
+                },
+                onError: (errors) => {
+                    // Handle error response
+                    // if (props.errors && Object.keys(props.errors).length > 0) {
+                    //     const errorMessages = '<ul>' + Object.values(props.errors).map(err => `<li>${err}</li>`).join('') + '</ul>';
+                    //     Swal.fire({
+                    //         title: 'Error!',
+                    //         html: errorMessages,
+                    //         icon: 'error',
+                    //         confirmButtonText: 'Cool'
+                    //     });
+                    // }
+                    // console.error('Failed price insert:', props.errors);
+                },
+            });
+        } catch (error) {
+            console.error('Failed :', error);
+        }
     };
     return (
         <AuthenticatedLayout user={auth.user} header={''}>
@@ -400,6 +460,9 @@ const Index = (props) => {
                                     onChange={handleChange}
                                 >
                                     <option value="">-- Select Store --</option>
+                                    <option value="1">Main Store</option>
+                                    <option value="2">Sub Store</option>
+
                                 </select>
                             </div>
                             <div className="sm:col-span-2 pb-2">
@@ -469,19 +532,29 @@ const Index = (props) => {
                             <thead>
                                 <tr>
                                     <th className="border border-slate-500 text-left w-2/5">Cash Received</th>
-                                    <th className="border border-slate-500 text-right"></th>
+                                    <th className="border border-slate-500 text-right">
+                                        <input type="number" name="cash_in_hand" value={data[0].cash_in_hand} className="w-full text-right border-none pr-4" onChange={handleChange} />
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th className="border border-slate-500 text-left w-2/5">Online Banking</th>
-                                    <th className="border border-slate-500 text-right"></th>
+                                    <th className="border border-slate-500 text-right">
+                                        <input type="number" name="online_banking" value={data[0].online_banking} className="w-full text-right border-none pr-4" onChange={handleChange} />
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th className="border border-slate-500 text-left w-2/5">VISA/Master Card</th>
-                                    <th className="border border-slate-500 text-right"></th>
+                                    <th className="border border-slate-500 text-right">
+                                        <input type="number" name="card_in_bank" value={data[0].card_in_bank} className="w-full text-right border-none pr-4" onChange={handleChange} />
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th className="border border-slate-500 text-left w-2/5">Change Amount </th>
-                                    <th className="border border-slate-500 text-right bg-indigo-500 text-white"></th>
+                                    <th className="border border-slate-500 text-right bg-indigo-500 text-white">{data[0].change_amount}</th>
+                                </tr>
+                                <tr>
+                                    <th className="border border-slate-500 text-left w-2/5">Due Amount </th>
+                                    <th className="border border-slate-500 text-right bg-red-400 text-white">{data[0].due_amount}</th>
                                 </tr>
                             </thead>
                         </table>
