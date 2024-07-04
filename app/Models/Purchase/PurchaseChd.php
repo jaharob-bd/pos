@@ -11,7 +11,7 @@ class PurchaseChd extends Model
 
     protected $table = 'purchase_chds';
     protected $fillable = [
-        'purchase_mst_id', 'product_v_id', 'quantity', 'price', 'total_cost', 'purchase_date', 'status', 'created_by', 'updated_by'
+        'purchase_mst_id', 'product_v_id', 'quantity', 'price', 'purchase_date', 'status', 'created_by', 'updated_by'
     ];
 
     public function purchaseMst()

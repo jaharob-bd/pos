@@ -33,26 +33,23 @@ class PurchaseController extends Controller
 
     public function store(Request $request)
     {
-        dd(request()->all());
+        // request data from server
+        $data = $request->all()[0];
+        // dd($data);
         // db transaction
         try {
             // Start transaction
             DB::beginTransaction();
-
             // insert purchase_msts table
-            $purchaseMst = $this->save_purchase_msts($request);
-
+            $purchaseMst = $this->save_purchase_msts($data);
             // insert purchase_chds table
-            $this->save_purchase_chds($request, $purchaseMst->id);
-
+            $this->save_purchase_chds($data, $purchaseMst->id);
             // insert stock_msts table
-            $this->save_stock_msts($request);
-
+            $this->save_stock_msts($data);
             // insert stock_chds table
-            $this->save_stock_chds($request);
-
+            // $this->save_stock_chds($data, $purchaseMst->id);
             // insert payment_msts table
-            $this->save_payment_msts($request, $purchaseMst->id);
+            // $this->save_payment_msts($data, $purchaseMst->id);
 
             // Commit transaction
             DB::commit();
@@ -63,43 +60,57 @@ class PurchaseController extends Controller
         }
     }
 
-    private function save_purchase_msts(Request $request)
+    public function save_purchase_msts($data)
     {
+        // Call the stored procedure to generate a unique UID
+        // $unique_uid = $this->generateUniqueUID('PURA', 'purchase_msts', 'purchase_uid');
+        $prefix = 'PUR';
+        $tableName = 'purchase_msts';
+        $uidColumn = 'purchase_uid';
+
+        $uniqueUid = $this->generateUniqueId($prefix, $tableName, $uidColumn);
+
+        // Now you can use $uniqueUid as needed
         return PurchaseMst::create([
-            'purchase_uid' => $request->purchase_uid,
-            'supplier_id' => $request->supplier_id,
-            'purchase_date' => $request->purchase_date,
-            'total_cost' => $request->total_cost,
-            'status' => $request->status,
-            'created_by' => $request->created_by,
-            'updated_by' => $request->updated_by,
+            'purchase_uid' => $uniqueUid,
+            'supplier_id' => $data['supplier_id'],
+            'purchase_date' => Carbon::now(),
+            'sub_total' => $data['sub_total'],
+            'discount_type' => $data['discount_type'],
+            'discount_amt' => $data['discount'],
+            'VAT_type' => $data['vat_type'],
+            'VAT_amt' => $data['vat'],
+            'grand_total' => $data['grand_total'],
+            'status' => 'ordered',
+            'created_by' => auth()->id(), // or some other valid user ID
+            'updated_by' => $chd['updated_by'] ?? auth()->id(), // or some other valid user ID
         ]);
     }
 
-    private function save_purchase_chds(Request $request, $purchaseMstId)
+    private function save_purchase_chds($data, $purchaseMstId)
     {
-        foreach ($request->purchase_chds as $chd) {
+        foreach ($data['items'] as $chd) {
             PurchaseChd::create([
                 'purchase_mst_id' => $purchaseMstId,
-                'product_v_id' => $chd['product_v_id'],
+                'product_v_id' => $chd['variant_id'], // corrected the key
+                'price' => $chd['variant_price'], // corrected the key
                 'quantity' => $chd['quantity'],
-                'price' => $chd['price'],
-                'total_cost' => $chd['total_cost'],
-                'purchase_date' => $request->purchase_date,
-                'status' => $chd['status'],
-                'created_by' => $chd['created_by'],
-                'updated_by' => $chd['updated_by'],
+                'purchase_date' => Carbon::now(),
+                'status' => 1,
+                'created_by' => auth()->id(), // or some other valid user ID
+                'updated_by' => $chd['updated_by'] ?? auth()->id(), // or some other valid user ID
             ]);
         }
     }
 
-    private function save_stock_msts(Request $request)
+    private function save_stock_msts($data)
     {
-        foreach ($request->stock_msts as $stock) {
+        foreach ($data['items'] as $stock) {
+            dd($stock);
             $productId = $stock['product_v_id'];
             $quantityToAdd = $stock['quantity'];
             $currentTimestamp = Carbon::now();
-    
+
             StockMst::updateOrInsert(
                 ['product_v_id' => $productId],
                 [
@@ -114,51 +125,61 @@ class PurchaseController extends Controller
         }
     }
 
-    public function updateStock(Request $request)
+    private function save_stock_chds($data, $purchaseMstId = null, $salesMstId = null)
     {
-        $productId = $request->input('product_v_id');
-        $quantityToAdd = $request->input('quantity');
-
-        $currentTimestamp = Carbon::now();
-
-        StockMst::updateOrInsert(
-            ['product_id' => $productId],
-            [
-                'quantity' => \DB::raw("quantity + $quantityToAdd"),
-                'last_updated' => $currentTimestamp
-            ]
-        );
-
-        return response()->json(['message' => 'Stock updated successfully']);
-    }
-
-    private function save_stock_chds(Request $request)
-    {
-        foreach ($request->stock_chds as $chd) {
+        foreach ($data['items'] as $chd) {
             StockChd::create([
                 'product_v_id' => $chd['product_v_id'],
                 'quantity' => $chd['quantity'],
                 'movement_type' => $chd['movement_type'],
-                'movement_add_id' => $chd['movement_add_id'],
-                'movement_remove_id' => $chd['movement_remove_id'],
+                'movement_add_id' => $purchaseMstId,
+                'movement_remove_id' => $salesMstId,
                 'created_by' => $chd['created_by'],
                 'updated_by' => $chd['updated_by'],
             ]);
         }
     }
 
-    private function save_payment_msts(Request $request, $purchaseMstId)
+    private function save_payment_msts($data, $purchaseMstId)
     {
         PurPayDetail::create([
-            'pay_trans_no' => $request->pay_trans_no,
+            'pay_trans_no'    => $data->pay_trans_no,
             'purchase_mst_id' => $purchaseMstId,
-            'pay_total' => $request->pay_total,
-            'pay_date' => $request->pay_date,
-            'pay_by' => $request->pay_by,
-            'trxID' => $request->trxID,
-            'status' => $request->status,
-            'created_by' => $request->created_by,
-            'updated_by' => $request->updated_by,
+            'pay_total'       => $data->pay_total,
+            'pay_date'        => $data->pay_date,
+            'pay_by'          => $data->pay_by,
+            'trxID'           => $data->trxID,
+            'status'          => $data->status,
+            'created_by'      => $data->created_by,
+            'updated_by'      => $data->updated_by,
         ]);
+    }
+    private function generateUniqueUID($prefix, $tableName, $uidColumn)
+    {
+        $result = \DB::select("CALL SP_GENERATE_UNIQUE_UID('$prefix', '$tableName', '$uidColumn')");
+        // Extract the generated unique UID from the result (assuming it's a single row result)
+        if (!empty($result) && isset($result[0]->generated_uid)) {
+            return $result[0]->generated_uid;
+        }
+
+        // Handle error or fallback if needed
+        return null;
+    }
+    public function generateUniqueId($prefix, $tableName, $uidColumn)
+    {
+        // Prepare the output parameter
+        $output = DB::statement('SET @unique_uid = ""');
+
+        // Call the stored procedure
+        $result = DB::select('CALL SP_GENERATE_UNIQUE_UID(?, ?, ?, @unique_uid)', [
+            $prefix,
+            $tableName,
+            $uidColumn
+        ]);
+
+        // Retrieve the output parameter
+        $uniqueUid = DB::select('SELECT @unique_uid AS unique_uid');
+
+        return $uniqueUid[0]->unique_uid;
     }
 }

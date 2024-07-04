@@ -9,9 +9,9 @@ const Index = (props) => {
     const auth = props.auth;
     const initial = [
         {
-            batch_no: '1',
-            store_id: '',
-            supplier_id: '',
+            batch_no: '',
+            store_id: '1',
+            supplier_id: '1',
             discount_type: 2, // 1 = percentage 2 = amount
             vat_type: 1, // 1 = percentage 2 = amount
             discount: '',
@@ -259,7 +259,7 @@ const Index = (props) => {
             router.post('/purchase-store', data, {
                 preserveScroll: true,
                 onSuccess: () => {
-                    setData(initial);
+                    // setData(initial);
                 },
                 onError: (errors) => {
                     // Handle error response
@@ -272,7 +272,7 @@ const Index = (props) => {
                     //         confirmButtonText: 'Cool'
                     //     });
                     // }
-                    // console.error('Failed price insert:', props.errors);
+                    console.error('Failed price insert:', props.errors);
                 },
             });
         } catch (error) {

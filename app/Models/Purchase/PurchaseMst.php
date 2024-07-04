@@ -10,7 +10,7 @@ class PurchaseMst extends Model
 
     protected $table = 'purchase_msts';
     protected $fillable = [
-        'purchase_uid', 'supplier_id', 'purchase_date', 'total_cost', 'status', 'created_by', 'updated_by'
+        'purchase_uid', 'supplier_id', 'purchase_date', 'sub_total','discount_type', 'discount_amt','VAT_type','VAT_amt', 'status','grand_total', 'created_by', 'updated_by'
     ];
 
     public function purchaseChds()

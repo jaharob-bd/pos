@@ -12,7 +12,7 @@ class StockMst extends Model
 
     protected $table = 'stock_msts';
     protected $fillable = [
-        'product_v_id', 'quantity', 'created_by', 'updated_by'
+        'product_v_id', 'quantity', 'last_updated', 'created_by', 'updated_by'
     ];
 
     public function productVariantPrice()
