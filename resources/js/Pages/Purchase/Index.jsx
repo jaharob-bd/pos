@@ -11,7 +11,7 @@ const Index = (props) => {
         {
             batch_no: '',
             store_id: '1',
-            supplier_id: '1',
+            supplier_id: '',
             discount_type: 2, // 1 = percentage 2 = amount
             vat_type: 1, // 1 = percentage 2 = amount
             discount: '',
@@ -19,8 +19,8 @@ const Index = (props) => {
             sub_total: '',
             grand_total: '',
             cash_in_hand: '',
-            online_banking: '',
             card_in_bank: '',
+            online_banking: '',
             change_amount: '',
             due_amount: '',
             items: [
@@ -254,12 +254,20 @@ const Index = (props) => {
     };
 
     const submit = () => {
+        if (data[0].grand_total === '' || data[0].grand_total < 0) {
+            SwalAlert('warning', 'Please add to card product', 'center');
+            return;
+        }
+        if (data[0].supplier_id === '') {
+            SwalAlert('warning', 'Please add to supplier', 'center');
+            return;
+        }
 
         try {
             router.post('/purchase-store', data, {
                 preserveScroll: true,
                 onSuccess: () => {
-                    // setData(initial);
+                    setData(initial);
                 },
                 onError: (errors) => {
                     // Handle error response

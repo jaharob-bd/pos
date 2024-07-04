@@ -20,6 +20,8 @@ use App\Models\Purchase\StockChd;
 use App\Models\Purchase\PurPayDetail;
 use App\Models\Supplier\Supplier;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 
 class PurchaseController extends Controller
 {
@@ -44,15 +46,16 @@ class PurchaseController extends Controller
             $purchaseMst = $this->save_purchase_msts($data);
             // insert purchase_chds table
             $this->save_purchase_chds($data, $purchaseMst->id);
+            // insert payment_msts table
+            $this->save_payment_msts($data, $purchaseMst->id);
             // insert stock_msts table
             $this->save_stock_msts($data);
             // insert stock_chds table
-            // $this->save_stock_chds($data, $purchaseMst->id);
-            // insert payment_msts table
-            // $this->save_payment_msts($data, $purchaseMst->id);
-
+            $this->save_stock_chds($data, $purchaseMst->id);
             // Commit transaction
             DB::commit();
+            Session::flash('success', 'Purchase successfully!');
+            return redirect()->route('purchases');
         } catch (\Exception $e) {
             // Rollback transaction in case of error
             DB::rollBack();
@@ -62,28 +65,25 @@ class PurchaseController extends Controller
 
     public function save_purchase_msts($data)
     {
-        // Call the stored procedure to generate a unique UID
-        // $unique_uid = $this->generateUniqueUID('PURA', 'purchase_msts', 'purchase_uid');
-        $prefix = 'PUR';
-        $tableName = 'purchase_msts';
-        $uidColumn = 'purchase_uid';
-
-        $uniqueUid = $this->generateUniqueId($prefix, $tableName, $uidColumn);
-
         // Now you can use $uniqueUid as needed
         return PurchaseMst::create([
-            'purchase_uid' => $uniqueUid,
-            'supplier_id' => $data['supplier_id'],
+            'purchase_uid'  => Str::uuid(),
+            'batch_no'      => $data['batch_no'],
+            'supplier_id'   => $data['supplier_id'],
             'purchase_date' => Carbon::now(),
-            'sub_total' => $data['sub_total'],
+            'sub_total'     => $data['sub_total'],
             'discount_type' => $data['discount_type'],
-            'discount_amt' => $data['discount'],
-            'VAT_type' => $data['vat_type'],
-            'VAT_amt' => $data['vat'],
-            'grand_total' => $data['grand_total'],
-            'status' => 'ordered',
-            'created_by' => auth()->id(), // or some other valid user ID
-            'updated_by' => $chd['updated_by'] ?? auth()->id(), // or some other valid user ID
+            'discount_amt'  => $data['discount'],
+            'VAT_type'      => $data['vat_type'],
+            'VAT_amt'       => $data['vat'],
+            'grand_total'   => $data['grand_total'],
+            'paid_amt'      => $data['cash_in_hand'] ?? 0 + $data['online_banking'] ?? 0 + $data['card_in_bank'] ?? 0,
+            'change_amt'    => $data['change_amount'],
+            'due_amt'       => $data['due_amount'],
+            'store_id'      => $data['store_id'],
+            'status'        => 'ordered',
+            'created_by'    => auth()->id(), // or some other valid user ID
+            'updated_by'    => $data['updated_by'] ?? auth()->id(), // or some other valid user ID
         ]);
     }
 
@@ -92,13 +92,13 @@ class PurchaseController extends Controller
         foreach ($data['items'] as $chd) {
             PurchaseChd::create([
                 'purchase_mst_id' => $purchaseMstId,
-                'product_v_id' => $chd['variant_id'], // corrected the key
-                'price' => $chd['variant_price'], // corrected the key
-                'quantity' => $chd['quantity'],
-                'purchase_date' => Carbon::now(),
-                'status' => 1,
-                'created_by' => auth()->id(), // or some other valid user ID
-                'updated_by' => $chd['updated_by'] ?? auth()->id(), // or some other valid user ID
+                'product_v_id'    => $chd['variant_id'], // corrected the key
+                'price'           => $chd['variant_price'], // corrected the key
+                'quantity'        => $chd['quantity'],
+                'purchase_date'   => Carbon::now(),
+                'status'          => 1,
+                'created_by'      => auth()->id(), // or some other valid user ID
+                'updated_by'      => $chd['updated_by'] ?? auth()->id(), // or some other valid user ID
             ]);
         }
     }
@@ -106,66 +106,76 @@ class PurchaseController extends Controller
     private function save_stock_msts($data)
     {
         foreach ($data['items'] as $stock) {
-            dd($stock);
-            $productId = $stock['product_v_id'];
+            $productId = $stock['variant_id'];
             $quantityToAdd = $stock['quantity'];
             $currentTimestamp = Carbon::now();
 
             StockMst::updateOrInsert(
                 ['product_v_id' => $productId],
                 [
-                    'quantity' => \DB::raw("quantity + $quantityToAdd"),
+                    'quantity'     => \DB::raw("quantity + $quantityToAdd"),
                     'last_updated' => $currentTimestamp,
-                    'created_by' => $stock['created_by'],
-                    'updated_by' => $stock['updated_by'],
-                    'created_at' => $currentTimestamp,  // Only set when inserting a new record
-                    'updated_at' => $currentTimestamp
+                    'created_by'   => $stock['created_by'] ?? auth()->id(),
+                    'updated_by'   => $stock['updated_by'] ?? auth()->id(),
+                    'created_at'   => $currentTimestamp,  // Only set when inserting a new record
+                    'updated_at'   => $currentTimestamp
                 ]
             );
         }
     }
 
-    private function save_stock_chds($data, $purchaseMstId = null, $salesMstId = null)
+    private function save_stock_chds($data, $purchaseMstId = null)
     {
         foreach ($data['items'] as $chd) {
             StockChd::create([
-                'product_v_id' => $chd['product_v_id'],
-                'quantity' => $chd['quantity'],
-                'movement_type' => $chd['movement_type'],
+                'product_v_id'    => $chd['variant_id'],
+                'quantity'        => $chd['quantity'],
+                'movement_type'   => 'addition',
                 'movement_add_id' => $purchaseMstId,
-                'movement_remove_id' => $salesMstId,
-                'created_by' => $chd['created_by'],
-                'updated_by' => $chd['updated_by'],
+                'created_by'      => $chd['created_by'] ?? auth()->id(),
+                'updated_by'      => $chd['updated_by'] ?? auth()->id(),
             ]);
         }
     }
 
     private function save_payment_msts($data, $purchaseMstId)
     {
-        PurPayDetail::create([
-            'pay_trans_no'    => $data->pay_trans_no,
-            'purchase_mst_id' => $purchaseMstId,
-            'pay_total'       => $data->pay_total,
-            'pay_date'        => $data->pay_date,
-            'pay_by'          => $data->pay_by,
-            'trxID'           => $data->trxID,
-            'status'          => $data->status,
-            'created_by'      => $data->created_by,
-            'updated_by'      => $data->updated_by,
-        ]);
-    }
-    private function generateUniqueUID($prefix, $tableName, $uidColumn)
-    {
-        $result = \DB::select("CALL SP_GENERATE_UNIQUE_UID('$prefix', '$tableName', '$uidColumn')");
-        // Extract the generated unique UID from the result (assuming it's a single row result)
-        if (!empty($result) && isset($result[0]->generated_uid)) {
-            return $result[0]->generated_uid;
-        }
+        // Payment method keys
+        $paymentMethods = [
+            'cash_in_hand' => 1,
+            'card_in_bank' => 2,
+            'online_banking' => 3
+        ];
 
-        // Handle error or fallback if needed
-        return null;
+        $paymentDetails = [];
+        $paymentAmount = 0;
+
+        foreach ($paymentMethods as $key => $methodId) {
+            if (isset($data[$key]) && $data[$key] > 0) {
+                $paymentDetails[] = [
+                    'payment_method_id' => $methodId,
+                    'amount' => $data[$key],
+                    'trxID' => $data[$key . '_trxID'] ?? '' // Assuming transaction ID keys are like 'cash_in_hand_trxID'
+                ];
+                $paymentAmount += $data[$key];
+            }
+        }
+        if ($paymentAmount > 0) {
+            // Insert into payment_details table
+            PurPayDetail::create([
+                'payment_uid'     => Str::uuid(),
+                'purchase_mst_id' => $purchaseMstId,
+                'payment_amt'     => $paymentAmount,
+                'payment_date'    => Carbon::now(),
+                'payment_details' => json_encode($paymentDetails),
+                'status'          => 1,
+                'created_by'      => auth()->id(),
+                'updated_by'      => auth()->id(),
+            ]);
+        }
     }
-    public function generateUniqueId($prefix, $tableName, $uidColumn)
+
+    private function generateUniqueId($prefix, $tableName, $uidColumn)
     {
         // Prepare the output parameter
         $output = DB::statement('SET @unique_uid = ""');

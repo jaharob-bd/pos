@@ -9,9 +9,9 @@ class PurPayDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'pur_pay_details';
+    protected $table = 'purchase_payment_details';
     protected $fillable = [
-        'pay_trans_no', 'purchase_mst_id', 'pay_total', 'pay_date', 'pay_by', 'trxID', 'status', 'created_by', 'updated_by'
+        'payment_uid', 'purchase_mst_id', 'payment_amt', 'payment_date', 'payment_details', 'status', 'created_by', 'updated_by'
     ];
 
     public function purchaseMst()
