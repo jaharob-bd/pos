@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-export default function Modal({ children, show = false, title = 'Modal Title', maxWidth = '2xl', maxHeight = '3xl', closeable = true, onClose = () => { } }) {
+export default function Modal({ children, show = false, title = 'Modal Title', maxWidth = '2xl', maxHeight = '3xl', modalPosition= 'items-center', closeable = true, onClose = () => { } }) {
     const close = () => {
         if (closeable) {
             onClose();
@@ -16,6 +16,8 @@ export default function Modal({ children, show = false, title = 'Modal Title', m
         '2xl': 'sm:max-w-2xl',
         '3xl': 'sm:max-w-3xl',
         '4xl': 'sm:max-w-4xl',
+        '5xl': 'sm:max-w-5xl',
+        '6xl': 'sm:max-w-6xl',
     }[maxWidth];
 
     const maxHeightClass = {
@@ -37,7 +39,9 @@ export default function Modal({ children, show = false, title = 'Modal Title', m
             <Dialog
                 as="div"
                 id="modal"
-                className="fixed inset-0 flex overflow-y-auto px-4 py-6 sm:px-0 items-center z-50 transform transition-all"
+                className={`top-0 start-0 z-[80] fixed inset-0 flex overflow-y-auto px-4 py-6 sm:px-0 z-50 transform transition-all ${modalPosition}`}
+                // className="size-full top-0 start-0 z-[80] fixed inset-0 flex overflow-y-auto px-1 py-1 sm:px-0 z-50 transform transition-all"
+                class_v="hs-overlay hs-overlay-open:opacity-100 hs-overlay-open:duration-500 hidden size-full fixed top-0 start-0 z-[80] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none"
                 onClose={() => { }}
                 static
             >
@@ -63,7 +67,7 @@ export default function Modal({ children, show = false, title = 'Modal Title', m
                     leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
                     <Dialog.Panel
-                        className={`mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass} ${maxHeightClass}`}
+                        className={`mb-6 bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass} ${maxHeightClass}`}
                     >
                         {/* Header */}
                         <div className="flex justify-between items-center p-4 border-b">

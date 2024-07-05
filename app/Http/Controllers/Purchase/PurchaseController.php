@@ -20,6 +20,7 @@ use App\Models\Purchase\StockChd;
 use App\Models\Purchase\PurPayDetail;
 use App\Models\Supplier\Supplier;
 use Carbon\Carbon;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Str;
 
 
@@ -173,6 +174,11 @@ class PurchaseController extends Controller
                 'updated_by'      => auth()->id(),
             ]);
         }
+    }
+    public function view()
+    {
+        $data['purchases'] = PurchaseMst::all();
+        return Inertia::render('Purchase/List', $data);
     }
 
     private function generateUniqueId($prefix, $tableName, $uidColumn)

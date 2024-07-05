@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
     // Purchase
     Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases');
     Route::post('/purchase-store', [PurchaseController::class, 'store'])->name('purchase-store');
+    Route::get('/purchase-lists', [PurchaseController::class, 'view'])->name('purchase-lists');
     // Sales invoice
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
     Route::post('/invoice-store', [ProfileController::class, 'store'])->name('invoice-store');
