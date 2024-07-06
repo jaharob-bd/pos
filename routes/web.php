@@ -8,6 +8,8 @@ use App\Http\Controllers\Consumer\CustomerCommonController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Supplier\SupplierController;
+use App\Http\Controllers\Inventory\StockController;
+use App\Http\Controllers\Inventory\InventoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -66,6 +68,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases');
     Route::post('/purchase-store', [PurchaseController::class, 'store'])->name('purchase-store');
     Route::get('/purchase-lists', [PurchaseController::class, 'view'])->name('purchase-lists');
+    Route::get('/test', [PurchaseController::class, 'test'])->name('test');
+    // inventory
+    Route::get('/stocks', [StockController::class, 'index'])->name('stocks');
+    Route::get('/get-stocks', [StockController::class, 'getStock'])->name('get-stocks');
+    // stock movement
+    Route::get('/stock-movements', [StockController::class, 'stockMovement'])->name('stock-movements');
+    Route::get('/get-stock-movements', [StockController::class, 'getStockMovement'])->name('get-stock-movements');
+
     // Sales invoice
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
     Route::post('/invoice-store', [ProfileController::class, 'store'])->name('invoice-store');

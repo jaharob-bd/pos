@@ -19,4 +19,18 @@ class StockChd extends Model
     {
         return $this->belongsTo(ProductVariantPrice::class, 'product_v_id');
     }
+    public function getProductNameAttribute()
+    {
+        return $this->productVariantPrice->product->name;
+    }
+     // only product name can be joined
+     public function getProductIdAttribute()
+     {
+         return $this->productVariantPrice->product->id;
+     }
+     // only variant name can be joined
+     public function getVariantNameAttribute()
+     {
+         return $this->productVariantPrice->variant_name;
+     }
 }

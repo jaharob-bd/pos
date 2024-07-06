@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Purchase;
+namespace App\Http\Controllers\Inventory;
 
 use App\Http\Controllers\Controller;
 use App\Models\Catalog\Product;
@@ -24,14 +24,13 @@ use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Str;
 
 
-class PurchaseController extends Controller
+class InventoryController extends Controller
 {
     public function index()
     {
         $data['products'] = Product::with('variantPrices')->get();
-        // return $data['products'];
         $data['suppliers'] = Supplier::all();
-        return Inertia::render('Purchase/Index', $data);
+        return Inertia::render('Inventory/Index', $data);
     }
 
     public function store(Request $request)
@@ -131,7 +130,7 @@ class PurchaseController extends Controller
             StockChd::create([
                 'product_v_id'    => $chd['variant_id'],
                 'quantity'        => $chd['quantity'],
-                'movement_type'   => 'In',
+                'movement_type'   => 'addition',
                 'movement_add_id' => $purchaseMstId,
                 'created_by'      => $chd['created_by'] ?? auth()->id(),
                 'updated_by'      => $chd['updated_by'] ?? auth()->id(),

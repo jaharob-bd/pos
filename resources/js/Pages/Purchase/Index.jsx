@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { router, useForm } from '@inertiajs/react';
+import { Head, router, useForm} from '@inertiajs/react';
 import Select from 'react-select';
 import SwalAlert from '@/Components/Alert/SwalAlert';
 
@@ -267,6 +266,7 @@ const Index = (props) => {
             router.post('/purchase-store', data, {
                 preserveScroll: true,
                 onSuccess: () => {
+                    SwalAlert('success', 'Add Successfully!!', 'center');
                     setData(initial);
                 },
                 onError: (errors) => {
@@ -288,7 +288,8 @@ const Index = (props) => {
         }
     };
     return (
-        <AuthenticatedLayout user={auth.user} header={''}>
+        <AuthenticatedLayout user={auth.user} header={'Purchases Invoice'}>
+             <Head title="PUR-Invoice" />
             <div className="flex flex-col md:flex-row w-full h-full">
                 {/* Section 1 */}
                 <div className="w-full md:w-7/12 flex-grow flex">
