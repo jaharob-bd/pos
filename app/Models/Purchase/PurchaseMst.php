@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Purchase;
 
+use App\Models\Supplier\Supplier;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,5 +22,9 @@ class PurchaseMst extends Model
     public function purPayDetails()
     {
         return $this->hasMany(PurPayDetail::class, 'purchase_mst_id');
+    }
+    // supplier information
+    public function supplier(){
+        return $this->belongsTo(Supplier::class,'supplier_id');
     }
 }

@@ -138,13 +138,20 @@ export default function List({ auth, purchases }) {
                                                 )}
                                                 content={() => componentRef.current}
                                             /> */}
-                                            <button
+                                            <Link href={`/purchase-list/${purchase.id}`}
+                                                className="select-none rounded-lg bg-blue-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                                type="button"
+                                            >
+                                                <i className="ri-eye-line"></i>
+                                                show
+                                            </Link>
+                                            {/* <button
                                                 className="select-none rounded-lg bg-blue-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                                 type="button"
                                                 onClick={openModal}
                                             >
                                                 <i className="ri-eye-line"></i>
-                                            </button>
+                                            </button> */}
                                             <button
                                                 className="select-none rounded-lg bg-green-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                                 type="button"

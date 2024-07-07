@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { useTranslation } from "react-i18next";
-import Swal from 'sweetalert2';
+import ReactToPrint from 'react-to-print';
 
 export default function Index({ auth, stocks }) {
+    const componentRef = useRef();
     const { t } = useTranslation();
     const [stockLists, setStockLists] = useState(stocks);
 
@@ -46,11 +47,23 @@ export default function Index({ auth, stocks }) {
                                 Export
                             </Link>
                         </div>
+                        <ReactToPrint
+                            trigger={() => (
+                                <button
+                                    className="select-none rounded-lg bg-amber-500 py-1 px-2 mr-2 text-center align-middle font-sans text-xs text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    type="button"
+                                >
+                                    <i className="ri-printer-line p-1"></i>
+                                    Print
+                                </button>
+                            )}
+                            content={() => componentRef.current}
+                        />
                     </div>
                 </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <div className="inline-block min-w-full shadow-md overflow-hidden">
-                        <table className="min-w-full leading-normal border-collapse border border-black">
+                        <table ref={componentRef} className="min-w-full leading-normal border-collapse border border-black">
                             <thead>
                                 <tr>
                                     <th className="px-2 py-2 border-b-2 border-black bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">

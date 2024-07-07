@@ -175,19 +175,70 @@ class PurchaseController extends Controller
             ]);
         }
     }
-    public function view()
+    public function list()
     {
         $data['purchases'] = PurchaseMst::all();
         return Inertia::render('Purchase/List', $data);
     }
 
-    public function edit($id){
+    public function view($id)
+    {
+        $purchase = PurchaseMst::with(['purchaseChds.productVariantPrice.product', 'purPayDetails'])->find($id);
+
+        $data['purchases'] = [
+            'id' => $purchase->id,
+            'purchase_uid' => $purchase->purchase_uid,
+            'batch_no' => $purchase->batch_no,
+            'purchase_date' => $purchase->purchase_date,
+            'sub_total' => $purchase->sub_total,
+            'discount_type' => $purchase->discount_type,
+            'discount_amt' => $purchase->discount_amt,
+            'VAT_type' => $purchase->VAT_type,
+            'VAT_amt' => $purchase->VAT_amt,
+            'grand_total' => $purchase->grand_total,
+            'paid_amt' => $purchase->paid_amt,
+            'change_amt' => $purchase->change_amt,
+            'due_amt' => $purchase->due_amt,
+            'store_id' => $purchase->store_id,
+            'status' => $purchase->status,
+            'created_by' => $purchase->created_by,
+            'updated_by' => $purchase->updated_by,
+            'created_at' => $purchase->created_at,
+            'updated_at' => $purchase->updated_at,
+            'supplier' => $purchase->supplier,
+            'purchase_chds' => $purchase->purchaseChds->map(function ($chd) {
+                return [
+                    'id' => $chd->id,
+                    'purchase_mst_id' => $chd->purchase_mst_id,
+                    'product_name' => $chd->product_name,
+                    'product_v_id' => $chd->product_v_id,
+                    'variant_name' => $chd->variant_name,
+                    'price' => $chd->price,
+                    'quantity' => $chd->quantity,
+                    'total_price' => $chd->total_price,
+                    'purchase_date' => $chd->purchase_date,
+                    'status' => $chd->status,
+                    'created_by' => $chd->created_by,
+                    'updated_by' => $chd->updated_by,
+                    'created_at' => $chd->created_at,
+                    'updated_at' => $chd->updated_at,
+                    
+                ];
+            }),
+            'payment_details' => $purchase->purPayDetails
+        ];
+        return Inertia::render('Purchase/View', $data);
+        // return response()->json($data['purchases']);
+    }
+    public function edit($id)
+    {
         $data['purchase'] = PurchaseMst::find($id);
         $data['products'] = Product::with('variantPrices')->get();
         $data['suppliers'] = Supplier::all();
         return Inertia::render('Purchase/Edit', $data);
     }
-    public function test(){
+    public function test()
+    {
         $uniqueId = generateUniqueId('PUR');
         dd($uniqueId);
         // Use the $uniqueId as needed

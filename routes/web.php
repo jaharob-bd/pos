@@ -67,7 +67,8 @@ Route::middleware('auth')->group(function () {
     // Purchase
     Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases');
     Route::post('/purchase-store', [PurchaseController::class, 'store'])->name('purchase-store');
-    Route::get('/purchase-lists', [PurchaseController::class, 'view'])->name('purchase-lists');
+    Route::get('/purchase-lists', [PurchaseController::class, 'list'])->name('purchase-lists');
+    Route::get('/purchase-list/{id}', [PurchaseController::class, 'view'])->name('purchase-list');
     Route::get('/test', [PurchaseController::class, 'test'])->name('test');
     // inventory
     Route::get('/stocks', [StockController::class, 'index'])->name('stocks');
