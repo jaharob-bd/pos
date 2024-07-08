@@ -205,8 +205,8 @@ class PurchaseController extends Controller
             'updated_by' => $purchase->updated_by,
             'created_at' => $purchase->created_at,
             'updated_at' => $purchase->updated_at,
-            'supplier' => $purchase->supplier,
-            'purchase_chds' => $purchase->purchaseChds->map(function ($chd) {
+            'supplier_details' => $purchase->supplier,
+            'purchase_details' => $purchase->purchaseChds->map(function ($chd) {
                 return [
                     'id' => $chd->id,
                     'purchase_mst_id' => $chd->purchase_mst_id,
