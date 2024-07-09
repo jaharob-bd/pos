@@ -78,27 +78,21 @@ export default function View({ auth, purchases }) {
                                 content={() => componentRef.current}
                             />
                             <div ref={componentRef} className="print-container">
-                                <div className="max-w-3xl mx-auto p-6 my-4" id="invoice">
-                                    <div className="grid grid-cols-2 items-center">
-                                        <div>
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height={100} width={100} />
-                                        </div>
-                                        <div className="text-right">
-                                            <p>
+                                <div className="max-w-3xl mx-auto p-10 my-4" id="invoice">
+                                    <div className="flex flex-col items-center border-b pb-4">
+                                        <div className="flex items-center mb-4">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height={50} width={50} />
+                                            <p className="ml-2 text-center font-bold">
                                                 Tailwind Inc.
                                             </p>
+                                        </div>
+                                        <div className="text-center">
                                             <p className="text-gray-500 text-sm">
-                                                sales@tailwindcss.com
-                                            </p>
-                                            <p className="text-gray-500 text-sm mt-1">
-                                                +41-442341232
-                                            </p>
-                                            <p className="text-gray-500 text-sm mt-1">
-                                                VAT: 8657671212
+                                                sales@tailwindcss.com, +41-442341232,  VAT: 8657671212
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="grid grid-cols-2 items-center mt-2">
+                                    <div className="grid grid-cols-2 items-center mt-1">
                                         <div>
                                             <p className="font-bold text-gray-800">
                                                 Bill to :
@@ -108,9 +102,9 @@ export default function View({ auth, purchases }) {
                                                 <br />
                                                 {purchaseData.supplier_details.address}
                                             </p>
-                                            <p className="text-gray-500">
+                                            {/* <p className="text-gray-500">
                                                 {purchaseData.supplier_details.email}
-                                            </p>
+                                            </p> */}
                                         </div>
                                         <div className="text-right">
                                             <p className>
@@ -123,8 +117,8 @@ export default function View({ auth, purchases }) {
                                                 Invoice date: <span className="text-gray-500">
                                                     {purchaseData.purchase_date}
                                                 </span>
-                                                <br />
-                                                Due date:<span className="text-gray-500">31/07/2023</span>
+                                                {/* <br /> */}
+                                                {/* Due date:<span className="text-gray-500">31/07/2023</span> */}
                                             </p>
                                         </div>
                                     </div>
@@ -152,18 +146,18 @@ export default function View({ auth, purchases }) {
 
                                                     return (
                                                         <tr key={index} className="border-b border-gray-200">
-                                                            <td className="max-w-0 py-2 pl-2 pr-2 text-sm sm:pl-0 border-black">
+                                                            <td className="max-w-0 pl-2 pr-2 text-sm sm:pl-0 border-black">
                                                                 <div className="font-medium text-gray-900">
                                                                     {item.product_name} {item.variant_name}
                                                                 </div>
                                                             </td>
-                                                            <td className="hidden px-1 py-2 text-right text-sm text-gray-500 sm:table-cell border-black">
+                                                            <td className="hidden text-right text-sm text-gray-500 sm:table-cell border-black">
                                                                 {item.quantity}
                                                             </td>
-                                                            <td className="hidden px-2 py-2 text-right text-sm text-gray-500 sm:table-cell border-black">
+                                                            <td className="hidden text-right text-sm text-gray-500 sm:table-cell border-black">
                                                                 ${item.price}
                                                             </td>
-                                                            <td className="py-2 pl-1 pr-2 text-right text-sm text-gray-500 sm:pr-0 border-black">
+                                                            <td className="pl-1 pr-2 text-right text-sm text-gray-500 sm:pr-0 border-black">
                                                                 ${itemTotal.toFixed(2)}
                                                             </td>
                                                         </tr>
@@ -172,71 +166,71 @@ export default function View({ auth, purchases }) {
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th scope="row" colSpan={3} className="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0 border-black">
+                                                    <th scope="row" colSpan={3} className="hidden text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0 border-black">
                                                         Subtotal
                                                     </th>
-                                                    <th scope="row" className="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden border-black">
+                                                    <th scope="row" className=" text-left text-sm font-normal text-gray-500 sm:hidden border-black">
                                                         Subtotal
                                                     </th>
-                                                    <td className="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0 border-black">
+                                                    <td className=" text-right text-sm text-gray-500 sm:pr-0 border-black">
                                                         ${subTotal.toFixed(2)}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row" colSpan={3} className="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0 border-black">
+                                                    <th scope="row" colSpan={3} className="hidden  text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0 border-black">
                                                         Discount {purchaseData.discount_type === 1 ? ' (%)' : ' ($)'}
                                                     </th>
-                                                    <th scope="row" className="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden border-black">
+                                                    <th scope="row" className=" text-left text-sm font-normal text-gray-500 sm:hidden border-black">
                                                         Discount
                                                     </th>
-                                                    <td className="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0 border-black">
+                                                    <td className=" text-right text-sm text-gray-500 sm:pr-0 border-black">
                                                         ${discountAmount || discountAmount.toFixed(2)}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row" colSpan={3} className="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0 border-black">
+                                                    <th scope="row" colSpan={3} className="hidden text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0 border-black">
                                                         VAT {purchaseData.VAT_type === 1 ? ' (%)' : ' ($)'}
                                                     </th>
-                                                    <th scope="row" className="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden border-black">
+                                                    <th scope="row" className="text-left text-sm font-normal text-gray-500 sm:hidden border-black">
                                                         VAT
                                                     </th>
-                                                    <td className="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0 border-black">
+                                                    <td className="text-right text-sm text-gray-500 sm:pr-0 border-black">
                                                         ${vatAmount.toFixed(2)}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th colSpan={3} className="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
+                                                    <th colSpan={3} className="hidden text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
                                                         Grand Total
                                                     </th>
-                                                    <th scope="row" className="pl-6 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:hidden border-black">
+                                                    <th scope="row" className="text-right text-sm font-semibold text-gray-900 sm:hidden border-black">
                                                         Grand Total
                                                     </th>
-                                                    <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0 border-black">
+                                                    <td className="text-right text-sm font-semibold text-gray-900 sm:pr-0 border-black">
                                                         ${totalAmount.toFixed(2)}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th colSpan={3} className="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
+                                                    <th colSpan={3} className="hidden text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
                                                         Total Due
                                                     </th>
-                                                    <th scope="row" className="pl-6 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:hidden border-black">
+                                                    <th scope="row" className="text-right text-sm font-semibold text-gray-900 sm:hidden border-black">
                                                         Total Due
                                                     </th>
-                                                    <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0 border-black">
+                                                    <td className="text-right text-sm font-semibold text-gray-900 sm:pr-0 border-black">
                                                         ${purchaseData?.due_amt}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th colSpan={2} className="hidden pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
+                                                    <th colSpan={2} className="hidden text-left text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
                                                         Payment Details:
                                                     </th>
-                                                    <th scope="row" className="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
+                                                    <th scope="row" className="hidden text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0 border-black">
                                                         Total Paid
                                                     </th>
-                                                    <th scope="row" className="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden border-black">
+                                                    <th scope="row" className="text-left text-sm font-semibold text-gray-900 sm:hidden border-black">
                                                         Total Paid
                                                     </th>
-                                                    <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0 border-black">
+                                                    <td className="text-right text-sm font-semibold text-gray-900 sm:pr-0 border-black">
                                                         ${purchaseData?.paid_amt}
                                                     </td>
                                                 </tr>
