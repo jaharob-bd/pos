@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Invoice\InvoiceController;
+use App\Http\Controllers\Sales\SalesController;
 use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\Catalog\ProductCommonController;
 use App\Http\Controllers\Consumer\CustomerController;
@@ -78,7 +79,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-stock-movements', [StockController::class, 'getStockMovement'])->name('get-stock-movements');
 
     // Sales invoice
-    Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
+    Route::get('/sales/orders', [SalesController::class, 'index'])->name('orders');
+    Route::get('/sales/order/create', [SalesController::class, 'create'])->name('order.create');
+    Route::get('/orders', [SalesController::class, 'index'])->name('orders');
+    Route::get('/orders', [SalesController::class, 'index'])->name('orders');
     Route::post('/invoice-store', [ProfileController::class, 'store'])->name('invoice-store');
 });
 

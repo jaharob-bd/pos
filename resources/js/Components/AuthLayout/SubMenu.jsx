@@ -39,12 +39,6 @@ const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
                         <span className="ml-2">Customer Group</span>
                     </Link>
                 </li>
-                <h6 className="px-7 front-bold">Supplier</h6>
-                <li>
-                    <Link href={route('suppliers')} className="sub_link_name squared">
-                        <span className="ml-2">Supplier</span>
-                    </Link>
-                </li>
                 <h6 className="px-7 front-bold">Purchase</h6>
                 <li>
                     <Link href={route('purchases')} className="sub_link_name squared">
@@ -56,6 +50,32 @@ const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
                         <span className="ml-2">Purchases List</span>
                     </Link>
                 </li>
+                <h6 className="px-7 front-bold">Sales</h6>
+                <li>
+                    <Link href={route('purchases')} className="sub_link_name squared">
+                        <span className="ml-2">Order</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link href={route('purchase-lists')} className="sub_link_name squared">
+                        <span className="ml-2">Shipments</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link href={route('purchase-lists')} className="sub_link_name squared">
+                        <span className="ml-2">Invoices</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link href={route('purchase-lists')} className="sub_link_name squared">
+                        <span className="ml-2">Refunds</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link href={route('purchase-lists')} className="sub_link_name squared">
+                        <span className="ml-2">Transactions</span>
+                    </Link>
+                </li>
                 <h6 className="px-7 front-bold">Inventory</h6>
                 <li>
                     <Link href={route('stocks')} className="sub_link_name squared">
@@ -65,6 +85,12 @@ const SubMenu = ({ isOpenSubMenu, subMenuHandler }) => {
                 <li>
                     <Link href={route('stock-movements')} className="sub_link_name squared">
                         <span className="ml-2">Stock Movement</span>
+                    </Link>
+                </li>
+                <h6 className="px-7 front-bold">Supplier</h6>
+                <li>
+                    <Link href={route('suppliers')} className="sub_link_name squared">
+                        <span className="ml-2">Supplier</span>
                     </Link>
                 </li>
             </ul>

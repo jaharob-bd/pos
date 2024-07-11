@@ -35,14 +35,17 @@ export default function Login({ status, canResetPassword }) {
             <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
                 <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
                     <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-1">
-                        <div>
-                            <img src={logo} className="w-mx-auto" style={{ height: 30, width: 200 }} />
-                        </div>
                         <form onSubmit={submit}>
-                            <div className="mt-12 flex flex-col items-center">
-                                <div className="w-full flex-1 mt-8">
+                            <div className="mt-10 flex flex-col items-center">
+                                <div className="flex items-center mb-4">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height={50} width={50} />
+                                    <p className="ml-2 text-center text-2xl	font-bold">
+                                       Tailwind Design
+                                    </p>
+                                </div>
+                                <div className="w-full flex-1 mt-10">
                                     <div className="flex flex-col items-center">
-                                        <button className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
+                                        <button className="w-full max-w-xs font-bold shadow-sm rounded-lg py-2 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                                             <div className="bg-white p-2 rounded-full">
                                                 <svg className="w-4" viewBox="0 0 533.5 544.3">
                                                     <path d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z" fill="#4285f4" />
@@ -56,7 +59,7 @@ export default function Login({ status, canResetPassword }) {
                                             </span>
                                         </button>
                                     </div>
-                                    <div className="my-12 border-b text-center">
+                                    <div className="my-4 border-b text-center">
                                         <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
                                             Or sign In with Cartesian E-mail
                                         </div>
