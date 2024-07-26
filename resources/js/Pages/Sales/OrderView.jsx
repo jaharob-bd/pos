@@ -6,10 +6,10 @@ import Modal from '@/Components/Modal';
 import { OrderViewActionButton } from './Partials/OrderViewActionButton';
 import { OrderViewSection01 } from './Partials/OrderViewSection01';
 import { OrderViewSection02 } from './Partials/OrderViewSection02';
-import { calculateSubTotal } from '../../Utils/TransCalculation';
-import { calculateDiscount } from '../../Utils/TransCalculation';
-import { calculateVAT } from '../../Utils/TransCalculation';
-import { calculateGrandTotal } from '../../Utils/TransCalculation';
+import { calculateSubTotal } from '@/Utils/PriceCalculation';
+import { calculateDiscount } from '@/Utils/PriceCalculation';
+import { calculateVAT } from '@/Utils/PriceCalculation';
+import { calculateGrandTotal } from '@/Utils/PriceCalculation';
 
 export default function OrderView({ auth, sales }) {
     const { t } = useTranslation();
@@ -40,7 +40,6 @@ export default function OrderView({ auth, sales }) {
                         discountAmount={discountAmount}
                         vatAmount={vatAmount}
                         totalAmount={totalAmount}
-
                     />
                     {/* section 2 info section */}
                     <OrderViewSection02
