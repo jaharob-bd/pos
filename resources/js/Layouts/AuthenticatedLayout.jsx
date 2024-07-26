@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Link, usePage } from '@inertiajs/react'
-// import LeftSidebar from '@/Components/LeftSidebar'
 import Sidebar from "@/Components/AuthLayout/Sidebar"
 import SubMenu from "@/Components/AuthLayout/SubMenu"
 import Header from "@/Components/AuthLayout/Header"
 import { SidebarOverlay } from '@/Components/AuthLayout/SidebarOverlay'
-import Swal from 'sweetalert2';
-
-const determineActiveMenu = () => {
-  return window.location.pathname;
-}
+import { modules } from '@/Api/Module'
+import Swal from 'sweetalert2'
 
 export default function Authenticated({ user, header, children, props }) {
   const { flash } = usePage().props;
   const { errors } = usePage().props;
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenSubMenu, setIsOpenSubMenu] = useState('hide');
-  // console.log(props);
+  const [subMenus, setSubMenus] = useState([]);
   useEffect(() => {
     // Effect to handle sidebar state on component mount
     const handleSidebarState = () => {
@@ -77,15 +73,21 @@ export default function Authenticated({ user, header, children, props }) {
     setIsOpen(!isOpen);
   };
 
-  const subMenuHandler = (show) => {
+  const subMenuHandler = (show, subData = []) => {
+    console.log('button type: ' + show, subData);
+    setSubMenus(subData);
     setIsOpenSubMenu(show);
   }
-  const activeMenu = determineActiveMenu();
+  // const activeMenu = determineActiveMenu();
 
   return (
     <div>
-      <Sidebar isOpen={isOpen} subMenuHandler={subMenuHandler} /> 
-      <SubMenu isOpenSubMenu={isOpenSubMenu} subMenuHandler={subMenuHandler} /> 
+      <Sidebar isOpen={isOpen} subMenuHandler={subMenuHandler} modules={modules} />
+      <SubMenu
+        isOpenSubMenu={isOpenSubMenu}
+        subMenuHandler={subMenuHandler}
+        subMenus = {subMenus}
+      />
       <SidebarOverlay isOpen={isOpen} handleOverlayClick={handleOverlayClick} />
       <main className={`flex flex-col pl-2 ${isOpen ? 'ml-20' : 'w-full'}`}>
         <Header handleToggle={handleToggle} />

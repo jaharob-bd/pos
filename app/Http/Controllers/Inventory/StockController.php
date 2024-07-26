@@ -46,7 +46,7 @@ class StockController extends Controller
         });
 
         // return Inertia::render('Inventory/Index', $data);
-        return Inertia::render('Inventory/Stock/Index', $data);
+        return Inertia::render('Inventory/Stock/Stock', $data);
     }
 
     public function getStock()
@@ -72,12 +72,8 @@ class StockController extends Controller
 
     public function stockMovement()
     {
-        return Inertia::render('Inventory/Stock/StockMovement');
-    }
-    public function getStockMovement()
-    {
         $stocks = StockChd::with('productVariantPrice')->get();
-        $data['stocks'] = $stocks->map(function ($purchase) {
+        $data['stock_movements'] = $stocks->map(function ($purchase) {
             return [
                 'id' => $purchase->id,
                 'product_id' => $purchase->product_id,
@@ -92,6 +88,26 @@ class StockController extends Controller
                 'updated_at' => $purchase->updated_at,
             ];
         });
-        return response()->json($data['stocks']);
+        return Inertia::render('Inventory/Stock/StockMovement', $data);
+    }
+    public function getStockMovement()
+    {
+        $stocks = StockChd::with('productVariantPrice')->get();
+        $data['stock_movements'] = $stocks->map(function ($purchase) {
+            return [
+                'id' => $purchase->id,
+                'product_id' => $purchase->product_id,
+                'product_name' => $purchase->product_name,
+                'product_v_id' => $purchase->product_v_id,
+                'variant_name' => $purchase->variant_name,
+                'quantity' => $purchase->quantity,
+                'movement_type' => $purchase->movement_type,
+                'created_by' => $purchase->created_by,
+                'updated_by' => $purchase->updated_by,
+                'created_at' => $purchase->created_at,
+                'updated_at' => $purchase->updated_at,
+            ];
+        });
+        return response()->json($data['stock_movements']);
     }
 }

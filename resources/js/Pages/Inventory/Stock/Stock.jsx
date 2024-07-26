@@ -4,7 +4,7 @@ import { Head, Link } from '@inertiajs/react';
 import { useTranslation } from "react-i18next";
 import ReactToPrint from 'react-to-print';
 
-export default function Index({ auth, stocks }) {
+export default function Stock({ auth, stocks }) {
     const componentRef = useRef();
     const { t } = useTranslation();
     const [stockLists, setStockLists] = useState(stocks);
@@ -89,16 +89,16 @@ export default function Index({ auth, stocks }) {
                                         <tr key={stock.id}>
                                             {index === 0 && (
                                                 <td
-                                                    className=" border-b border-black bg-white text-sm text-nowrap"
+                                                    className="border-b border-black bg-white text-sm text-nowrap"
                                                     rowSpan={rowspan}
                                                 >
                                                     {productName}
                                                 </td>
                                             )}
-                                            <td className=" border-b border-black bg-white text-sm text-nowrap">
+                                            <td className="border border-black bg-white text-sm text-nowrap">
                                                 {stock.variant_name}
                                             </td>
-                                            <td className=" border-b border-black bg-white text-sm text-nowrap">
+                                            <td className="border border-black bg-white text-sm text-nowrap">
                                                 {stock.quantity}
                                             </td>
                                             <td className=" border-b border-black bg-white text-sm">

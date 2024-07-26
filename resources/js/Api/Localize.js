@@ -14,7 +14,11 @@ export const resources = {
             "catalog": "Catalog",
             "consumer": "Consumer",
             "supplier": "Supplier",
-            "Purchase": "Purchase",
+            "purchase": "Purchase",
+            "peoples": "Peoples",
+            "employee": "Employee",
+            "HRM": "HRM",
+            "position": "Position",
         }
     },
     "ar": {
@@ -32,7 +36,11 @@ export const resources = {
             "catalog": "تسجيل",
             "consumer": "تسجيل",
             "supplier": "تسجيل",
-            "Purchase": "Purchase",
+            "purchase": "الإعد",
+            "peoples": "تسجي",
+            "employee": "تسجيل",
+            "HRM": "الإلكت",
+            "position": "الإلكتروني",
         }
     },
     "ms": {

@@ -6,8 +6,8 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
-import logo from '@/assets/images/jaharob_logo.jpg'
-import bgImg from '@/assets/images/background.svg'
+const logo = 'assets/images/login/jaharob_logo.jpg'
+const bgImg = 'assets/images/login/background.svg'
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -36,14 +36,14 @@ export default function Login({ status, canResetPassword }) {
                 <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
                     <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-1">
                         <form onSubmit={submit}>
-                            <div className="mt-10 flex flex-col items-center">
+                            <div className="mt-12 flex flex-col items-center">
                                 <div className="flex items-center mb-4">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height={50} width={50} />
+                                    <img src={logo} alt="company-logo" height={50} width={50} />
                                     <p className="ml-2 text-center text-2xl	font-bold">
-                                       Tailwind Design
+                                        Tailwind Design
                                     </p>
                                 </div>
-                                <div className="w-full flex-1 mt-10">
+                                <div className="w-full flex-1 mt-16">
                                     <div className="flex flex-col items-center">
                                         <button className="w-full max-w-xs font-bold shadow-sm rounded-lg py-2 bg-green-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                                             <div className="bg-white p-2 rounded-full">

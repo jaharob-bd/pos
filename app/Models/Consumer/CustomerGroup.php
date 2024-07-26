@@ -10,8 +10,8 @@ class CustomerGroup extends Model
     use HasFactory;
     protected $fillable = ['name', 'code', 'notes', 'status'];
 
-    // public function product()
+    // public function group()
     // {
-    //     return $this->belongsTo(Product::class);
+    //     return $this->hasMany(Customer::class);
     // }
 }

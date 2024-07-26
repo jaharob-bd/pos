@@ -1,8 +1,11 @@
-import React from 'react'
+import { Link } from '@inertiajs/react';
+import React, { useState } from 'react'
 import { useTranslation } from "react-i18next";
 
 const Header = ({ handleToggle }) => {
-    // const { t } = useTranslation();
+    const [userInfoIsOpen, setUserInfoIsOpen] = useState(false);
+    // const userInfoToggle = () => setUserInfoIsOpen(true);
+    const userInfoToggle = () => setUserInfoIsOpen(!userInfoIsOpen);
     const { t, i18n } = useTranslation();
     const changeLanguageHandler = (e) => {
         const languageValue = e.target.value
@@ -227,10 +230,10 @@ const Header = ({ handleToggle }) => {
                     </select>
                 </li>
                 <li className="dropdown ml-3">
-                    <button type="button" className="dropdown-toggle flex items-center">
+                    <button type="button" className="dropdown-toggle flex items-center" onClick={userInfoToggle}>
                         <img src="https://placehold.co/32x32" alt="" className="w-8 h-8 rounded block object-cover align-middle" />
                     </button>
-                    <ul className="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
+                    <ul className={`dropdown-menu shadow-md shadow-black/5 z-30  py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px] ${!userInfoIsOpen ? 'hidden' : ''}`}>
                         <li>
                             <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
                         </li>
@@ -238,7 +241,14 @@ const Header = ({ handleToggle }) => {
                             <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
                         </li>
                         <li>
-                            <a href="#" className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
+                            <Link
+                                href={route('logout')}
+                                method="post"
+                                as="button"
+                                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
+                            >
+                                Log Out
+                            </Link>
                         </li>
                     </ul>
                 </li>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, router, useForm} from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import Select from 'react-select';
 import SwalAlert from '@/Components/Alert/SwalAlert';
 
@@ -8,9 +8,7 @@ const OrderCreate = (props) => {
     const auth = props.auth;
     const initial = [
         {
-            batch_no: '',
-            store_id: '1',
-            supplier_id: '',
+            customer_id: '',
             discount_type: 2, // 1 = percentage 2 = amount
             vat_type: 1, // 1 = percentage 2 = amount
             discount: '',
@@ -29,7 +27,7 @@ const OrderCreate = (props) => {
     ];
     const [data, setData] = useState(initial);
     const [products, setProducts] = useState(props.products);
-    const [suppliers, setSuppliers] = useState(props.suppliers);
+    const [customers, setCustomers] = useState(props.customers);
     const [popoverVisible, setPopoverVisible] = useState(false);
     const [popoverData, setPopoverData] = useState(null);
     const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
@@ -38,21 +36,21 @@ const OrderCreate = (props) => {
         label: product.name,
         variant: product.variant_prices
     }));
-    // supplier options
-    const supplierOptions = suppliers.map((supplier) => ({
-        value: supplier.id,
-        label: supplier.name
+    // customer options
+    const customerOptions = customers.map((customer) => ({
+        value: customer.id,
+        label: customer.name
     }));
     // Log data whenever it updates
     useEffect(() => {
         // console.log(data);
     }, [data]);
-    // supplier options
-    const handleCartItemSupplier = (selectedOption) => {
+    // customer options
+    const handleCartItemCustomer = (selectedOption) => {
         console.log(selectedOption);
         setData((prevData) => {
             const updatedData = [...prevData];
-            updatedData[0].supplier_id = selectedOption ? selectedOption.value : '';
+            updatedData[0].customer_id = selectedOption ? selectedOption.value : '';
             return updatedData;
         });
         console.log(data)
@@ -99,9 +97,9 @@ const OrderCreate = (props) => {
             variant_name: variantData.variant_name,
             product_id: item.value,
             product_name: item.label,
-            variant_price: variantData.buy_price,
+            variant_price: variantData.sale_price,
             quantity: 1,
-            total_price: variantData.buy_price
+            total_price: variantData.sale_price
         };
 
         const discount = data[0].discount || 0;
@@ -136,7 +134,7 @@ const OrderCreate = (props) => {
         SwalAlert('success', `${item.label} ${variantData.variant_name} is Added`);
     };
     // ----- end variant propups -----
-    // general state change batch_no, supplier_id, store_id -----
+    // general state change batch_no, customer_id, store_id -----
     const calculateSubTotal = (items) => {
         return items.reduce((a, b) => a + Number(b.total_price || 0), 0);
     };
@@ -165,10 +163,10 @@ const OrderCreate = (props) => {
         return dueAmount;
     };
     // calculateChangeAmount
-    const calculateChangeAmount = (grandTotal, cashInHand, onlineBanking, cardInBank) =>{
-       const changeAmount =  parseInt(cashInHand) + parseInt(onlineBanking) + parseInt(cardInBank) - parseInt(grandTotal);
-       if (changeAmount < 0) return 0;
-       return changeAmount;
+    const calculateChangeAmount = (grandTotal, cashInHand, onlineBanking, cardInBank) => {
+        const changeAmount = parseInt(cashInHand) + parseInt(onlineBanking) + parseInt(cardInBank) - parseInt(grandTotal);
+        if (changeAmount < 0) return 0;
+        return changeAmount;
     }
 
     const resetDiscountOrVat = (item, type, value) => {
@@ -257,13 +255,13 @@ const OrderCreate = (props) => {
             SwalAlert('warning', 'Please add to card product', 'center');
             return;
         }
-        if (data[0].supplier_id === '') {
-            SwalAlert('warning', 'Please add to supplier', 'center');
+        if (data[0].customer_id === '') {
+            SwalAlert('warning', 'Please add to customer', 'center');
             return;
         }
 
         try {
-            router.post('/purchase-store', data, {
+            router.post('/order-store', data, {
                 preserveScroll: true,
                 onSuccess: () => {
                     SwalAlert('success', 'Add Successfully!!', 'center');
@@ -289,7 +287,7 @@ const OrderCreate = (props) => {
     };
     return (
         <AuthenticatedLayout user={auth.user} header={'Purchases Invoice'}>
-             <Head title="Sales Order" />
+            <Head title="Sales Order" />
             <div className="flex flex-col md:flex-row w-full h-full">
                 {/* Section 1 */}
                 <div className="w-full md:w-7/12 flex-grow flex">
@@ -304,8 +302,17 @@ const OrderCreate = (props) => {
                                 placeholder="Select or Type Name ..."
                                 components={{ Option: CustomOption }}
                             />
+                            <div className="flex-1 w-full opacity-25 select-none flex flex-col flex-wrap content-center justify-center">
+                                <div className="pl-2 text-left text-lg relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <div className="text-center absolute bg-cyan-500 text-white w-5 h-5 text-xs p-0 leading-5 rounded-full -right-2 top-0">
+                                        {data[0].items.length || 0}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                         {popoverVisible && popoverData.variant.length > 1 && (
                             <div
                                 id="popover-content"
@@ -331,8 +338,7 @@ const OrderCreate = (props) => {
                                                         <th></th>
                                                         <th className="border-l border-r border-b border-indigo-500">Sl. No</th>
                                                         <th className="border-l border-r border-b border-indigo-500">Variant</th>
-                                                        <th className="border-l border-r border-b border-indigo-500">Buy Price</th>
-                                                        <th className="border-l border-r border-b border-indigo-500">Sale Price</th>
+                                                        <th className="border-l border-r border-b border-indigo-500">Price</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -356,7 +362,6 @@ const OrderCreate = (props) => {
                                                                     </td>
                                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{i + 1}</td>
                                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.variant_name}</td>
-                                                                    <td className="pl-1 border-l border-r border-b border-indigo-500 text-right">{variant.buy_price}</td>
                                                                     <td className="pl-1 border-l border-r border-b border-indigo-500">{variant.sale_price}</td>
                                                                 </tr>
                                                             );
@@ -425,7 +430,7 @@ const OrderCreate = (props) => {
                 {/* Section 2 */}
                 <div className="w-full md:w-5/12 flex-grow flex px-3">
                     <div className="bg-white rounded-3xl flex flex-col w-full">
-                        {data[0].items.length > 0 ? (
+                        {/* {data[0].items.length > 0 ? (
                             <div>
                                 <div className="flex-1 w-full opacity-25 select-none flex flex-col flex-wrap content-center justify-center">
                                     <div className="pl-8 text-left text-lg py-4 relative">
@@ -433,7 +438,7 @@ const OrderCreate = (props) => {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                         <div className="text-center absolute bg-cyan-500 text-white w-5 h-5 text-xs p-0 leading-5 rounded-full -right-2 top-3">
-                                            {data[0].items.reduce((a, b) => a + (b['quantity'] || 0), 0)}
+                                            {data[0].items.length || 0}
                                         </div>
                                     </div>
                                 </div>
@@ -449,39 +454,17 @@ const OrderCreate = (props) => {
                                     </p>
                                 </div>
                             </div>
-                        )}
+                        )} */}
                         {/* general information */}
                         <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-                            <div>
-                                <input
-                                    name="batch_no"
-                                    type="text"
-                                    className="block w-full px-3 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-50 dark:border-gray-50 focus:border-blue-50 dark:focus:border-blue-50 focus:outline-none focus:ring"
-                                    onChange={handleChange}
-                                    placeholder="Batch No"
-                                />
-                            </div>
-                            <div>
-                                <select
-                                    name="store_id"
-                                    type="text"
-                                    className="block w-full px-3 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">-- Select Store --</option>
-                                    <option value="1">Main Store</option>
-                                    <option value="2">Sub Store</option>
-
-                                </select>
-                            </div>
                             <div className="sm:col-span-2 pb-2">
                                 <Select
-                                    name="supplier_id"
+                                    name="customer_id"
                                     type="text"
-                                    options={supplierOptions}
-                                    onChange={handleCartItemSupplier}
+                                    options={customerOptions}
+                                    onChange={handleCartItemCustomer}
                                     classNamePrefix="react-select"
-                                    placeholder="Select Supplier"
+                                    placeholder="Select customer"
                                     className="block w-full mt-1 text-gray-900 bg-white border border-gray-300 rounded-md dark:text-gray-300 dark:border-gray-600 focus:border-blue-100 dark:focus:border-blue-100 focus:outline-none focus:ring"
                                 />
 

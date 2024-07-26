@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from '@inertiajs/react';
 import { useTranslation } from "react-i18next";
 
-function Sidebar({ isOpen, subMenuHandler }) {
+function Sidebar({ isOpen, subMenuHandler, modules }) {
     const { t } = useTranslation();
 
     return (
@@ -11,54 +11,32 @@ function Sidebar({ isOpen, subMenuHandler }) {
                 <img src="https://placehold.co/32x32" alt="" className="w-12 h12 rounded object-cover" />
             </a>
             <ul className="nav-links mt-4 space-y-2">
-                <li className="active hover:bg-cyan-400">
-                    <Link href={route('dashboard')}>
-                        <i className="ri-home-2-line"></i>
-                        <span className="link_name">{t('dashboard')}</span>
-                    </Link>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-flashlight-line"></i>
-                        <span className="link_name">{t('catalog')}</span>
-                    </a>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-flashlight-line"></i>
-                        <span className="link_name">{t('consumer')}</span>
-                    </a>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-flashlight-line"></i>
-                        <span className="link_name">{t('Purchase')}</span>
-                    </a>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-instance-line"></i>
-                        <span className="link_name">{t('sales')}</span>
-                    </a>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-store-line"></i>
-                        <span className="link_name">{t('inventory')}</span>
-                    </a>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-settings-5-line"></i>
-                        <span className="link_name">{t('setting')}</span>
-                    </a>
-                </li>
-                <li className="active hover:bg-cyan-400">
-                    <a onClick={() => { subMenuHandler('show') }}>
-                        <i className="ri-secure-payment-line"></i>
-                        <span className="link_name">{t('security')}</span>
-                    </a>
-                </li>
+                {/* start dynamic submenu */}
+                {
+                    modules.map((module, idx) => {
+                        if (module.route) {
+                            return (
+                                <li key={idx} className="active hover:bg-cyan-400">
+                                    <Link href={route(`${module.route}`)}>
+                                        <i className={module.menu_icon}></i>
+                                        <span className="link_name">{t(`${module.menu_name}`)}</span>
+                                    </Link>
+                                </li>
+                            )
+                        } else {
+                            return (
+                                <li key={idx} className="active hover:bg-cyan-400">
+                                    <a onClick={() => { subMenuHandler('show', module.submenu) }}>
+                                        <i className={module.menu_icon}></i>
+                                        <span className="link_name">{t(`${module.menu_name}`)}</span>
+                                    </a>
+                                </li>
+                            )
+                        }
+
+                    })
+                }
+                {/* end submenu */}
             </ul>
         </div>
     )

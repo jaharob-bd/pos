@@ -4,15 +4,15 @@ import { Head, Link } from '@inertiajs/react';
 import { useTranslation } from "react-i18next";
 import ReactToPrint from 'react-to-print';
 
-export default function StockMovement({ auth }) {
+export default function StockMovement({ auth, stock_movements }) {
     const componentRef = useRef();
     const { t } = useTranslation();
-    const [stockLists, setStockLists] = useState([]);
+    const [stockLists, setStockLists] = useState(stock_movements);
 
-    useEffect(() => {
-        fetchStockInfo();
-        console.log('Updated stockLists:', stockLists); // Log the updated stockLists
-    }, [stockLists]);
+    // useEffect(() => {
+    //     fetchStockInfo();
+    //     console.log('Updated stockLists:', stockLists); // Log the updated stockLists
+    // }, [stockLists]);
 
     const fetchStockInfo = async () => {
         try {

@@ -15,14 +15,11 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Session;
 use App\Models\Purchase\PurchaseMst;
 use App\Models\Purchase\PurchaseChd;
-use App\Models\Purchase\StockMst;
-use App\Models\Purchase\StockChd;
+use App\Models\Inventory\Stock\StockChd;
+use App\Models\Inventory\Stock\StockMst;
 use App\Models\Purchase\PurPayDetail;
 use App\Models\Supplier\Supplier;
 use Carbon\Carbon;
-use Dflydev\DotAccessData\Data;
-use Illuminate\Support\Str;
-
 
 class PurchaseController extends Controller
 {
@@ -108,13 +105,13 @@ class PurchaseController extends Controller
     {
         foreach ($data['items'] as $stock) {
             $productId = $stock['variant_id'];
-            $quantityToAdd = $stock['quantity'];
+            $quantityToPlus = $stock['quantity'];
             $currentTimestamp = Carbon::now();
 
             StockMst::updateOrInsert(
                 ['product_v_id' => $productId],
                 [
-                    'quantity'     => \DB::raw("quantity + $quantityToAdd"),
+                    'quantity'     => \DB::raw("quantity + $quantityToPlus"),
                     'last_updated' => $currentTimestamp,
                     'created_by'   => $stock['created_by'] ?? auth()->id(),
                     'updated_by'   => $stock['updated_by'] ?? auth()->id(),

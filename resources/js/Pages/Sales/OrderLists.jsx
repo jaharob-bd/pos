@@ -6,10 +6,10 @@ import Modal from '@/Components/Modal';
 import ReactToPrint from 'react-to-print';
 import PrintComponent from '@/Components/PrintComponent';
 
-export default function OrderLists({ auth, purchases }) {
+export default function OrderLists({ auth, sales }) {
     const componentRef = useRef();
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const [purchaseLists, setPurchaseLists] = useState(purchases);
+    const [saleLists, setSaleLists] = useState(sales);
 
     // console.log(errors);
     const { t } = useTranslation();
@@ -52,19 +52,19 @@ export default function OrderLists({ auth, purchases }) {
                         <table className="min-w-full leading-normal">
                             <thead>
                                 <tr>
-                                    <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Action
+                                    <th className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                         Invoice No
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Batch No
+                                        Customer
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Purchase Date
+                                        Date
                                     </th>
-                                    <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider text-nowrap">
                                         Sub Total
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
@@ -73,14 +73,14 @@ export default function OrderLists({ auth, purchases }) {
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                         VAT
                                     </th>
-                                    <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider text-nowrap">
                                         Grand Total
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Paid Total
+                                        Paid
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Due Total
+                                        Due
                                     </th>
                                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                         Status
@@ -88,71 +88,46 @@ export default function OrderLists({ auth, purchases }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {purchaseLists.map((purchase) => (
-                                    <tr key={purchase.id}>
-                                        <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm text-center text-nowrap">
-                                            {/* <Link>
-                                                <i class="ri-apps-2-add-fill"></i>
-                                            </Link> */}
-                                            <Link href={`/purchase-list/${purchase.id}`}
-                                                className="select-none rounded-lg bg-blue-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                {saleLists.map((sale) => (
+                                    <tr key={sale.id}>
+                                        <td className="border-b border-gray-200 bg-white text-sm text-center text-nowrap">
+                                            <Link href={`/sales/order/view/${sale.id}`}
+                                                className="select-none rounded-lg bg-blue-500 py-1 px-1 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                                 type="button"
                                             >
                                                 <i class="ri-apps-2-add-fill"></i>
                                             </Link>
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm text-nowrap">
-                                            {purchase.purchase_uid}
+                                            {sale.sale_uid}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm text-nowrap">
-                                            {purchase.batch_no}
+                                            {sale.customer.name}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm text-nowrap">
-                                            {purchase.purchase_date}
+                                            {sale.sale_date}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm">
-                                            {purchase.sub_total}
+                                            {sale.sub_total}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm">
-                                            {purchase.discount_amt}
+                                            {sale.discount_amt}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm">
-                                            {purchase.VAT_amt}
+                                            {sale.VAT_amt}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm">
-                                            {purchase.grand_total}
+                                            {sale.grand_total}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm">
-                                            {purchase.paid_amt}
+                                            {sale.paid_amt}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text-sm">
-                                            {purchase.due_amt}
+                                            {sale.due_amt}
                                         </td>
                                         <td className="px-2 py-2 border-b border-gray-200 bg-white text">
-                                            {purchase.status}
+                                            {sale.status}
                                         </td>
-                                        {/* <td className="px-2 py-2 border-b border-gray-200 bg-white text text-nowrap	">
-                                            <Link href={`/purchase-list/${purchase.id}`}
-                                                className="select-none rounded-lg bg-blue-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                                type="button"
-                                            >
-                                                <i className="ri-eye-line"></i>
-                                                show
-                                            </Link>
-                                            <button
-                                                className="select-none rounded-lg bg-green-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                                type="button"
-                                            >
-                                                <i className="ri-pencil-line"></i>
-
-                                            </button>
-                                            <button
-                                                className="select-none rounded-lg bg-red-500 py-1 px-2 mr-1 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                                type="button"
-                                            >
-                                                <i className="ri-delete-bin-line"></i>
-                                            </button>
-                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -161,7 +136,7 @@ export default function OrderLists({ auth, purchases }) {
                 </div>
             </div>
 
-            <Modal show={isOpenModal} title='View Purchase' maxWidth='6xl' modalPosition='items-top' onClose={closeModal}>
+            <Modal show={isOpenModal} title='View Purchase' maxWidth='2xl' modalPosition='items-top' onClose={closeModal}>
                 <PrintComponent ref={componentRef} />
             </Modal>
         </AuthenticatedLayout>
