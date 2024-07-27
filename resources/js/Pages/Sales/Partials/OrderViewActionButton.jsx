@@ -2,7 +2,7 @@ import React from 'react'
 import ReactToPrint from 'react-to-print';
 import { Head, Link } from '@inertiajs/react';
 
-export const OrderViewActionButton = ({ saleData }) => {
+export const OrderViewActionButton = ({ saleData, openModal }) => {
     return (
         <div className="flex flex-wrap gap-2.5 items-center">
             <div>
@@ -39,7 +39,7 @@ export const OrderViewActionButton = ({ saleData }) => {
                             Invoice
                         </Link>
                         :
-                        ''
+                        null
                 }
                 {
                     saleData?.status != 'refunded' && saleData?.status != 'canceled' ?
@@ -50,18 +50,19 @@ export const OrderViewActionButton = ({ saleData }) => {
                             Refund
                         </Link>
                         :
-                        ''
+                        null
                 }
                 {
                     saleData?.status != 'canceled' ?
-                        <Link
+                        <button
                             className="bg-red-600 text-red-100 hover:bg-red-700 select-none rounded-lg py-1 px-2 mr-1 text-center align-middle font-sans text-xs uppercase text-black shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            onClick={() => openModal()}
                         >
                             <i className="ri-close-circle-line pr-1"></i>
                             Cancel
-                        </Link>
+                        </button>
                         :
-                        ''
+                        null
                 }
                 <Link
                     href={route('orders')}

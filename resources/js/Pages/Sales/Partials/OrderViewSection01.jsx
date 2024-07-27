@@ -12,9 +12,9 @@ export const OrderViewSection01 = ({ saleData, subTotal, discountAmount, vatAmou
                         <p>
                             Date : <span className="">{saleData.sale_date}</span>
                         </p>
-                        <p>
+                        {/* <p>
                             Order Status : <span className="uppercase">{saleData?.status}</span>
-                        </p>
+                        </p> */}
                         <p>
                             Payment Status : <span className="">{saleData?.due_amt > 0 ? 'Unpaid' : 'Full Paid'}</span>
                         </p>

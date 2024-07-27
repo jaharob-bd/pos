@@ -284,7 +284,7 @@ const OrderCreate = (props) => {
         } catch (error) {
             console.error('Failed :', error);
         }
-    };
+    }
     return (
         <AuthenticatedLayout user={auth.user} header={'Purchases Invoice'}>
             <Head title="Sales Order" />

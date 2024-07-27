@@ -83,6 +83,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/sales/order/create', [SalesController::class, 'create'])->name('order.create');
     Route::get('/sales/order/view/{id}', [SalesController::class, 'show'])->name('order.view');
     Route::post('/order-store', [SalesController::class, 'store'])->name('order-store');
+    Route::post('/order-cancel', [SalesController::class, 'canceled'])->name('order-cancel');
+   
+   
+   
+   
     Route::post('/invoice-store', [ProfileController::class, 'store'])->name('invoice-store');
 });
 

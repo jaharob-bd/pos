@@ -12,7 +12,7 @@ class SaleMst extends Model
 
     protected $table = 'sale_msts';
     protected $fillable = [
-        'sale_uid', 'batch_no', 'customer_id', 'sale_date', 'sub_total','discount_type', 'discount_amt','VAT_type','VAT_amt', 'status','grand_total', 'paid_amt', 'change_amt', 'due_amt', 'created_by', 'updated_by'
+        'sale_uid', 'batch_no', 'customer_id', 'sale_date', 'sub_total','discount_type', 'discount_amt','VAT_type','VAT_amt', 'status','grand_total', 'paid_amt', 'change_amt', 'due_amt', 'created_by', 'updated_by', 'canceled_by', 'canceled_remarks', 'canceled_at'
     ];
 
     public function saleChds()
