@@ -296,7 +296,16 @@ class SalesController extends Controller
         try {
             DB::beginTransaction();
             // update saleMst with requested
-            SaleMst::where('id', $data['id'])->update(['status' => 'canceled', 'canceled_remarks' => $data['remarks'], 'canceled_date' => Carbon::now(), 'canceled_by' => auth()->id()]);
+            $updateData =  [
+                'status' => 'canceled',
+                'canceled_remarks' => $data['remarks'],
+                'canceled_at' => Carbon::now(),
+                'canceled_by' => Auth::id(),
+                'updated_at' => Carbon::now() // explicitly setting the updated_at timestamp
+            ];
+            // dd($updateData);
+            $updateMst = SaleMst::where('id', $data['id'])->update($updateData);
+            // dd($updateMst);
             // update stockMst with increased quantity
             foreach ($data['items'] as $item) {
                 StockMst::where('product_v_id', $item['product_v_id'])->increment('quantity', $item['quantity']);
