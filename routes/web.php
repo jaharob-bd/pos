@@ -15,6 +15,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\Setting\EmailController;
+Route::get('/email', [EmailController::class, 'emailSetup']);
+Route::post('/send-email', [EmailController::class, 'sendEmail']);
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

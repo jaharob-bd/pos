@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { dateFormat } from '../utils/helper'
+import { dateFormat } from '../Utils/helper'
 import ReceiptModal from '@/Components/ReceiptModal'
 import RightSidebar from '@/Components/RightSidebar'
 import ProductMode from './ProductMode'

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { priceFormat } from '../utils/helper'
+import { priceFormat } from '../Utils/helper'
 import { ProductsDatas } from "@/Api/ProductsDatas";
 
 const ProductMode = (props) => {

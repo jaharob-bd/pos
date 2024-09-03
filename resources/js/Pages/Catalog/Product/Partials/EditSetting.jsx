@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SwalWarning from '@/Components/Alert/SwalWarning';
-import { formatDate } from '@/utils/helper';
+import { formatDate } from '@/Utils/helper';
 
 export const EditSetting = ({ product }) => {
     const [newProduct, setNewProduct] = useState(product.new_product === 1);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { priceFormat } from '../utils/helper';
+import { priceFormat } from '../Utils/helper';
 // import web from '../utils/web'
 
 const ReceiptModal = (props) => {

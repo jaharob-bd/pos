@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // import web from '@/utils/web'
-import { priceFormat } from '@/utils/helper'
+import { priceFormat } from '@/Utils/helper'
 // import ContentLoader from 'react-content-loader'
 
 const ProductMode = (props) => {

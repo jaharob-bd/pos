@@ -12,6 +12,8 @@ import { calculateVAT } from '@/Utils/PriceCalculation';
 import { calculateGrandTotal } from '@/Utils/PriceCalculation';
 import { OrderCancel } from './OrderCancel';
 import SwalAlert from '@/Components/Alert/SwalAlert'
+import { pdf } from '@react-pdf/renderer';
+import OrderInvoiceDownload from './OrderInvoiceDownload';
 
 export default function OrderView({ auth, sales }) {
     const { t } = useTranslation();
@@ -25,6 +27,37 @@ export default function OrderView({ auth, sales }) {
     const discountAmount = useMemo(() => calculateDiscount(subTotal, saleData.discount_type, saleData.discount_amt), [subTotal, saleData]);
     const vatAmount = useMemo(() => calculateVAT(subTotal, discountAmount, saleData.VAT_type, saleData.VAT_amt), [subTotal, discountAmount, saleData]);
     const totalAmount = calculateGrandTotal(subTotal, discountAmount, vatAmount);
+
+    // download invoice 
+    const [isLoading, setIsLoading] = useState(false);
+    // const [fileName, setFileName] = useState('INV- ' + Math.floor(Math.random() * 100));
+    const [fileName, setFileName] = useState(saleData.sale_uid);
+
+    // const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const handleDownload = async () => {
+        setIsLoading(true);
+        const blob = await pdf(<OrderInvoiceDownload />).toBlob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName + '.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        SwalAlert('success', 'Download successfully');
+        setIsLoading(false);
+        URL.revokeObjectURL(url); // Clean up the URL object
+    }
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+        const clientEmail = 'mdalibd511@gmail.com';
+        router.post('/send-email', { clientEmail }, {
+            onSuccess: () => {
+                // SwalAlert('success', 'Email sent successfully');
+            },
+        });
+    };
 
     // modal opening and closing
     const closeModal = () => setIsOpenModal(false);
@@ -55,7 +88,7 @@ export default function OrderView({ auth, sales }) {
                     SwalAlert('success', 'Order Cancel Successfully!!', 'center');
                     // usdate saleData state status update
                     // setSaleData(saleData.status = 'canceled'); // not working
-                    setSaleData((prevData) => ({...prevData, status: 'canceled' }));
+                    setSaleData((prevData) => ({ ...prevData, status: 'canceled' }));
                     setCancelData({});
                     setIsOpenModal(false);
                 },
@@ -80,6 +113,9 @@ export default function OrderView({ auth, sales }) {
                     <OrderViewActionButton
                         saleData={saleData}
                         openModal={openModal}
+                        handleDownload={handleDownload}
+                        isLoading={isLoading}
+                        sendEmail={sendEmail}
                     />
                 </div>
                 <div className="flex flex-col md:flex-row w-full h-full">

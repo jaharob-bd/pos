@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { priceFormat, numberFormat } from '../utils/helper'
+import { priceFormat, numberFormat } from '../Utils/helper'
 
 const RightSidebar = (props) => {
   const { cartItems, addToCart, clearCart, removeFromCart, getTotalPrice, addCash, cash, change, submit } = props;
