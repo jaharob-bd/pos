@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import SwalAlert from '@/Components/Alert/SwalAlert';
 // import layout
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Select from 'react-select';
+import Swal from 'sweetalert2';
 
 function SendEmailForm(props) {
-    console.log(props.cc);
     const [user, setUser] = useState(props.auth.user);
-    const [ccOptions, setCcOptions] = useState( props.cc || []);
-    const [bccOptions, setBccOptions] = useState(props.bcc || []);
-    const [formData, setFormData] = useState({
-        cc: '',
-        bcc: ''
-    });
+    const [ccOptions, setCcOptions] = useState([]);
+    const [bccOptions, setBccOptions] = useState([]);
+    const [formData, setFormData] = useState({ cc: '', bcc: '' });
 
     const emailOptions = [
         { value: 'dummy1@example.com', label: 'dummy1@example.com' },
@@ -27,91 +24,114 @@ function SendEmailForm(props) {
         { value: 'dummy9@example.com', label: 'dummy9@example.com' }
     ];
 
-    const handleCcChange = (selectedOptions) => {
-        const selectedEmails = selectedOptions
-            ? selectedOptions.map(option => option.value).join(',')
-            : '';
+    useEffect(() => {
+        // Initialize CC and BCC options from props
+        setCcOptions(props.cc || []);
+        setBccOptions(props.bcc || []);
+    }, [props.cc, props.bcc]);
 
-        setFormData({
-            ...formData,
+    const handleCcChange = (selectedOptions) => {
+        const selectedEmails = selectedOptions ? selectedOptions.map(option => option.value).join(',') : '';
+        setFormData(prev => ({
+            ...prev,
             cc: selectedEmails,
-        });
+        }));
         setCcOptions(selectedOptions);
     };
 
     const handleBccChange = (selectedOptions) => {
-        const selectedEmails = selectedOptions
-            ? selectedOptions.map(option => option.value).join(',')
-            : '';
-
-        setFormData({
-            ...formData,
+        const selectedEmails = selectedOptions ? selectedOptions.map(option => option.value).join(',') : '';
+        setFormData(prev => ({
+            ...prev,
             bcc: selectedEmails,
-        });
+        }));
         setBccOptions(selectedOptions);
     };
-    console.log('cc: ', ccOptions);
-    console.log('bcc: ', bccOptions);
+
+    const validateForm = () => {
+        if (!ccOptions.length && !formData.cc) {
+            Swal.fire('Error', 'Please select at least one CC email.', 'error');
+            return false;
+        }
+        if (!bccOptions.length && !formData.bcc) {
+            Swal.fire('Error', 'Please select at least one BCC email.', 'error');
+            return false;
+        }
+        return true;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const data = {
-            ...formData
-        };
-        router.post('/send-email', data, {
+
+        if (!validateForm()) return;
+
+        const cc = formData.cc ? formData.cc : ccOptions.map(option => option.value).join(',');
+        const bcc = formData.bcc ? formData.bcc : bccOptions.map(option => option.value).join(',');
+
+        const data = { cc, bcc };
+        console.log('Submitting:', data);
+
+        router.post('/store-email', data, {
             onSuccess: () => {
-                SwalAlert('success', 'Email sent successfully');
-                setContent('');
+                Swal.fire('Success', 'Email sent successfully', 'success');
+                setFormData({ cc: '', bcc: '' });
+                setCcOptions([]);
+                setBccOptions([]);
             },
+            onError: () => {
+                Swal.fire('Error', 'Failed to send email.', 'error');
+            }
         });
     };
 
     return (
         <AuthenticatedLayout user={user} header={'Product List'}>
-            <Head title={'Email Setting' -  + ''} />
+            <Head title={'Email Setting' - + ''} />
             <form onSubmit={handleSubmit}>
                 <div className="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-gray-100">
                     <table className="table w-full">
-                        <tr>
-                            <td className="w-3/10 align-top">
-                                <label
-                                    className="block text-gray-600 font-bold mb-3 pr-4"
-                                    htmlFor="cc"
-                                >
-                                    CC <span className="text-red-600">*</span>
-                                </label>
-                            </td>
-                            <td className="w-7/10 align-top">
-                                <Select
-                                    isMulti
-                                    name="cc"
-                                    options={emailOptions}
-                                    className="form-input block w-full focus:bg-white p-1 align-right"
-                                    value={ccOptions}
-                                    onChange={handleCcChange}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="w-3/10 align-top">
-                                <label
-                                    className="block text-gray-600 font-bold mb-3 pr-4"
-                                    htmlFor="bcc"
-                                >
-                                    BCC <span className="text-red-600">*</span>
-                                </label>
-                            </td>
-                            <td className="w-7/10 align-top">
-                                <Select
-                                    isMulti
-                                    name="bcc"
-                                    options={emailOptions}
-                                    className="form-input block w-full focus:bg-white p-1 align-right"
-                                    value={bccOptions}
-                                    onChange={handleBccChange}
-                                />
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td className="w-3/10 align-top">
+                                    <label
+                                        className="block text-gray-600 font-bold mb-3 pr-4"
+                                        htmlFor="cc"
+                                    >
+                                        CC <span className="text-red-600">*</span>
+                                    </label>
+                                </td>
+                                <td className="w-7/10 align-top">
+                                    <Select
+                                        isMulti
+                                        name="cc"
+                                        options={emailOptions}
+                                        className="form-input block w-full focus:bg-white p-1 align-right"
+                                        value={ccOptions}
+                                        onChange={handleCcChange}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="w-3/10 align-top">
+                                    <label
+                                        className="block text-gray-600 font-bold mb-3 pr-4"
+                                        htmlFor="bcc"
+                                    >
+                                        BCC <span className="text-red-600">*</span>
+                                    </label>
+                                </td>
+                                <td className="w-7/10 align-top">
+                                    <Select
+                                        isMulti
+                                        name="bcc"
+                                        options={emailOptions}
+                                        className="form-input block w-full focus:bg-white p-1 align-right"
+                                        value={bccOptions}
+                                        onChange={handleBccChange}
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                     <div className="md:flex md:datas-center pt-2">
                         <div className="md:w-1/3" />
@@ -123,37 +143,7 @@ function SendEmailForm(props) {
                     </div>
                 </div>
             </form>
-            <div className="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-gray-100">
-                Email Template setup
-                <div className="flex justify-between items-center">
-                    <Link href="#">
-                        <a className="text-indigo-700 hover:text-indigo-500">Create New Template</a>
-                    </Link>
-                    <Link href="#">
-                        <a className="text-indigo-700 hover:text-indigo-500">Edit Template</a>
-                    </Link>
-                </div>
-            </div>
-            <div className="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-gray-100">
-                Email Template preview
-                <div className="flex justify-between items-center">
-                    <Link href="#">
-                        <a className="text-indigo-700 hover:text-indigo-500">Preview Template</a>
-                    </Link>
-                    <Link href="#">
-                        <a className="text-indigo-700 hover:text-indigo-500">Delete Template</a>
-                    </Link>
-                </div>
-            </div>
-            <div className="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-gray-100">
-                send setup
-            </div>
-            <input type="checkbox" /> invoice Create
-            <input type="checkbox" /> invoice Edit
-            <input type="checkbox" /> order Create
-            <input type="checkbox" /> order Edit
-            <input type="checkbox" /> Order refund
-            <input type="checkbox" /> Order cancel
+
         </AuthenticatedLayout>
     );
 }

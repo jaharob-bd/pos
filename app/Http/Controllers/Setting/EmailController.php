@@ -16,17 +16,19 @@ class EmailController extends Controller
 {
     public function emailSetup()
     {
-        $data['emails'] = DB::table('sa_email_setup')->first();
-        $data['cc'] =  [
-            ['value' => 'dummy1@example.com', 'label'=> 'dummy1@example.com'],
-            ['value' => 'dummy2@example.com', 'label'=> 'dummy2@example.com'],
-            ['value' => 'dummy3@example.com', 'label'=> 'dummy3@example.com'],
-        ];
-        $data['bcc'] =  [
-            ['value' => 'dummy4@example.com', 'label'=> 'dummy4@example.com'],
-            ['value' => 'dummy5@example.com', 'label'=> 'dummy5@example.com'],
-            ['value' => 'dummy6@example.com', 'label'=> 'dummy6@example.com'],
-        ];
+        $emails = DB::table('sa_email_setup')->first();
+        // Convert the comma-separated string of emails into an array
+        $ccEmails = explode(',', $emails->cc);
+        $bccEmails = explode(',', $emails->bcc);
+
+        // Map the emails into the required format
+        $data['cc'] = array_map(function ($email) {
+            return ['value' => $email, 'label' => $email];
+        }, $ccEmails);
+
+        $data['bcc'] = array_map(function ($email) {
+            return ['value' => $email, 'label' => $email];
+        }, $bccEmails);
 
         return Inertia::render('Setting/SendEmailForm', $data);
     }
@@ -35,17 +37,16 @@ class EmailController extends Controller
         // Validate incoming request data
         $validatedData = $request->validate([
             'cc' => 'nullable',
-            'cc.*' => 'nullable|email',
             'bcc' => 'nullable',
-            'bcc.*' => 'nullable|email',
         ]);
-
+        // dd($request->all());
         // Start a database transaction
         DB::beginTransaction();
 
         try {
             // Retrieve existing setup or create a new instance
             $emailSetup = EmailSetup::firstOrNew();
+            // dd($emailSetup);
 
             // Update the data
             $emailSetup->cc = $validatedData['cc'];
@@ -73,7 +74,6 @@ class EmailController extends Controller
     {
         // dd($request->all());
         $to = $request->input('clientEmail');
-        // dd($to);
         $cc = $request->input('cc');
         $bcc = $request->input('bcc');
         $content = $request->input('content'); // Get the content from the request

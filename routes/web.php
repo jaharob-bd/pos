@@ -17,6 +17,7 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\Setting\EmailController;
 Route::get('/email', [EmailController::class, 'emailSetup']);
+Route::post('/store-email', [EmailController::class,'storeEmail']);
 Route::post('/send-email', [EmailController::class, 'sendEmail']);
 
 Route::get('/', function () {
